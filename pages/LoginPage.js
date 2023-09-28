@@ -20,7 +20,7 @@ const LoginPage = () =>{
  
             <MyButton onPress={login} title="Login"/>
 
-            <Text style={styles.dont}>Don't have and account Sign Up</Text>
+            <Text style={styles.dont}>Don't have and account ? Sign Up</Text>
         </View>
     );
 }
