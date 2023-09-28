@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "261385207351",
+    "project_id": "medifind-ad39c",
+    "storage_bucket": "medifind-ad39c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261385207351:android:15bb11ff9fcd7c09d849b2",
+        "android_client_info": {
+          "package_name": "com.medifind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7U0nYAIxzqsnf4zsjcICspP5VLOuR_t8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

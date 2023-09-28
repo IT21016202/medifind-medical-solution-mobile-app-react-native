@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import "firebase/auth";
+
 import ToolBar from "../components/ToolBar";
 import TextInputBoxRegister from "../components/TextInputBox";
 import MyButton from "../components/MyButton";
 
 const RegisterPage = () =>{
+
+    useEffect(() => {
+        var firebaseConfig = {
+            apiKey: "AIzaSyA7U0nYAIxzqsnf4zsjcICspP5VLOuR_t8",
+            authDomain: "medifind-ad39c.firebaseapp.com",
+            databaseURL: "https://medifind-ad39c.firebaseio.com",
+            projectId: "medifind-ad39c",
+            storageBucket: "medifind-ad39c.appspot.com",
+            messagingSenderId: "261385207351",
+            appId: "1:261385207351:android:15bb11ff9fcd7c09d849b2",
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        //console.log(db);
+    }, []);
+
     return(
         <View style={styles.view}>
             {/* <ToolBar title="Register Page"/> */}
