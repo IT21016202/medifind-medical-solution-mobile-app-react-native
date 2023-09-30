@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, Alert } from "react-native";
+import { Text, View, Image, StyleSheet } from "react-native";
 import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
 
 import MyButton from "../components/MyButton";
@@ -12,7 +12,7 @@ const HomePage = ({ navigation }) =>{
 
             <MyButton title="Login" onPress={() => navigation.navigate('Login')}/>
             <Text></Text>
-            <MyButton title="Register" onPress={() => navigation.navigate('Register')}/>
+            <MyButton title="Register" onPress={() => navigation.navigate('RegisterSelection')}/>
 
             <Text style={styles.text}></Text>
         </View>
