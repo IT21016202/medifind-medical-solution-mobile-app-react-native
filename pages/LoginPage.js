@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, View, ScrollView } from "react-native";
 import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-import { saveUserSession } from "../SessionManager";
+import { saveUserSession } from "../sessionManager";
 
 import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
 import MyButton from "../components/MyButton";
 import TextInputBox from "../components/TextInputBox";
 
-const LoginPage = () =>{
+const LoginPage = ({ navigation }) =>{
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    // useEffect(() => {
-    //     var firebaseConfig = {
-    //         apiKey: "AIzaSyA7U0nYAIxzqsnf4zsjcICspP5VLOuR_t8",
-    //         authDomain: "medifind-ad39c.firebaseapp.com",
-    //         databaseURL: "https://medifind-ad39c.firebaseio.com",
-    //         projectId: "medifind-ad39c",
-    //         storageBucket: "medifind-ad39c.appspot.com",
-    //         messagingSenderId: "261385207351",
-    //         appId: "1:261385207351:android:15bb11ff9fcd7c09d849b2",
-    //     };
-    //     initializeApp(firebaseConfig);
-    // }, []);
 
     function login(){
         const auth = getAuth();
@@ -37,7 +24,8 @@ const LoginPage = () =>{
         .then((userCredential) => {
             console.log(userCredential.user.uid);
             saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email});
-            alert('User Logged In Successfully !')
+            alert('User Logged In Successfully !');
+            navigation.navigate('Dashboard')
         })
         .catch((error) => {
             const errorCode = error.code;

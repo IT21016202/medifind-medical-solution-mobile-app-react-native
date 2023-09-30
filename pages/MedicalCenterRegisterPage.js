@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, StyleSheet, TextInput, ScrollView } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
-import { saveUserSession } from "../SessionManager";
+import { saveUserSession } from "../sessionManager";
 
 import MyButton from "../components/MyButton";
 
-const MedicalCenterRegisterPage = () =>{
+const MedicalCenterRegisterPage = ({navigation}) =>{
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [pharmacyName, setPharmacyName] = useState("");
     const [mobileNo, setMobileNo] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
-    
-    // useEffect(() => {
-    //     var firebaseConfig = {
-    //         apiKey: "AIzaSyA7U0nYAIxzqsnf4zsjcICspP5VLOuR_t8",
-    //         authDomain: "medifind-ad39c.firebaseapp.com",
-    //         databaseURL: "https://medifind-ad39c-default-rtdb.firebaseio.com/",
-    //         projectId: "medifind-ad39c",
-    //         storageBucket: "medifind-ad39c.appspot.com",
-    //         messagingSenderId: "261385207351",
-    //         appId: "1:261385207351:android:15bb11ff9fcd7c09d849b2",
-    //     };
-    //     initializeApp(firebaseConfig);
-        
-    // }, []);
 
     function register(){
         const auth = getAuth();
@@ -59,7 +45,8 @@ const MedicalCenterRegisterPage = () =>{
                 .then(() => {
                 console.log('User data added to Realtime Database');
                 saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...userData });
-                alert("User Added")
+                alert("User Added");
+                navigation.navigate('Dashboard')
                 })
                 .catch((error) => {
                 console.error('Error adding user data to Realtime Database:', error);
