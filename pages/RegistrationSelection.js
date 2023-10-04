@@ -7,7 +7,7 @@ const RegistrationSelection = ({navigation}) => {
         <View>
             <MyButton title="Medical Center" onPress={() => navigation.navigate('MedicalCenterRegistration')}></MyButton>
             <MyButton title="Blood Done"></MyButton>
-            <MyButton title="Patient"></MyButton>
+            <MyButton title="Patient" onPress={() => navigation.navigate('UserRegistration')}></MyButton>
         </View>
     )
 }

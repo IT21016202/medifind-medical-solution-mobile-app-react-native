@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import MedicalCenterRegisterPage from "./pages/MedicalCenterRegisterPage";
 import RegistrationSelection from "./pages/RegistrationSelection";
 import Dashboard from "./pages/Dashboard";
+import UserRegisterPage from "./pages/UserRegisterPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,11 +17,12 @@ const App = () =>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Dashboard" component={Dashboard}/>
         <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="Dashboard" component={Dashboard}/>
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="RegisterSelection" component={RegistrationSelection} />
         <Stack.Screen name="MedicalCenterRegistration" component={MedicalCenterRegisterPage} />
+        <Stack.Screen name="UserRegistration" component={UserRegisterPage}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

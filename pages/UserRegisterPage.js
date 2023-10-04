@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import React, {useState} from "react";
+import {ScrollView, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native"
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { saveUserSession } from "../SessionManager/SessionManager";
 
 import MyButton from "../components/MyButton";
 
-const MedicalCenterRegisterPage = ({navigation}) =>{
+const UserRegisterPage = ({navigation}) =>{
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
-    const [pharmacyName, setPharmacyName] = useState("");
     const [mobileNo, setMobileNo] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -35,8 +34,7 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
             const userData = {
                 Name: name,
                 Mobile: mobileNo,
-                PharmacyName: pharmacyName, 
-                Type: 'medical',
+                Type: 'user',
                 CreatedAt: new Date(),
                 UpdatedAt : new Date()
             };
@@ -45,14 +43,13 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
             const userRef = ref(database, 'Users/' + userCredential.user.uid);
             set(userRef, userData)
                 .then(() => {
-                    console.log('User data added to Realtime Database');
-                    // Save user session
-                    saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...userData });
-                    alert("User Added");
-                    navigation.navigate('Dashboard')
+                console.log('User data added to Realtime Database');
+                saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...userData });
+                alert("User Added");
+                navigation.navigate('Dashboard')
                 })
-                    .catch((error) => {
-                    console.error('Error adding user data to Realtime Database:', error);
+                .catch((error) => {
+                console.error('Error adding user data to Realtime Database:', error);
                 });
             
         })
@@ -64,34 +61,27 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
        
     }
 
-    return(
-        <ScrollView style={styles.view} scrollEnabled={true}>
+    return( 
+        <ScrollView>
             <Text style={styles.medifind}>MediFind</Text>
-            <Text style={styles.registraion}>Medical Center Registration</Text>  
+            <Text style={styles.registraion}>User Registration</Text> 
 
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Your Name" name="name" value={name} onChangeText={text => setName(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Pharmacy Name" name="pharmacyName" value={pharmacyName} onChangeText={text => setPharmacyName(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Mobile No" name="mobile" value={mobileNo} onChangeText={text => setMobileNo(text)}></TextInput>
-            <Text style={{paddingLeft: '8%'}}>File Upload Box</Text>
-            <Text style={{paddingLeft: '8%'}}>Location Picker</Text>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Password" name="password" value={password} onChangeText={text => setPassword(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Re-Enter Password" name="re-password" value={rePassword} onChangeText={text => setRePassword(text)}></TextInput>
 
             <MyButton title="Register" onPress={register}></MyButton>
 
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.registered}>Already Registered ? Log In </Text>
+                <Text style={styles.registered}>Already Registered ? Log in</Text> 
             </TouchableOpacity>
         </ScrollView>
-    );
+    )
 }
 
-
 const styles = StyleSheet.create({
-    view:{ 
-    },
-
     medifind:{
         color: 'white', 
         fontSize: 25, 
@@ -121,4 +111,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default MedicalCenterRegisterPage;
+export default UserRegisterPage;                            

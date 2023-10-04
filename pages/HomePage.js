@@ -1,10 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Text, View, Image, StyleSheet } from "react-native";
 import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
+import { getUserSession } from '../SessionManager/SessionManager';
 
 import MyButton from "../components/MyButton";
 
 const HomePage = ({ navigation }) =>{
+
+    useEffect(() => {
+        const checkUserSession = async () => {
+            const userSession = await getUserSession();
+            if (userSession) {
+                console.log('logged in', userSession)
+                navigation.navigate('Dashboard')
+            } else {
+                console.log('not logged in')   
+            }
+        };
+        checkUserSession();
+    }, []);
+
     return(
         <View style={styles.view}>
             <ToolBarWithoutIcon/>
