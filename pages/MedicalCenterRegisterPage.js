@@ -49,7 +49,7 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
                     // Save user session
                     saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...userData });
                     alert("User Added");
-                    navigation.navigate('Dashboard')
+                    navigation.navigate('Home')
                 })
                     .catch((error) => {
                     console.error('Error adding user data to Realtime Database:', error);

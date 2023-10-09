@@ -4,7 +4,6 @@ import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import { saveUserSession } from "../SessionManager/SessionManager";
 import { getDatabase, ref, get } from 'firebase/database';
 
-import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
 import MyButton from "../components/MyButton";
 import TextInputBox from "../components/TextInputBox";
 
@@ -12,11 +11,11 @@ const LoginPage = ({ navigation }) =>{
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userData, setUserData] = useState(null);
 
     function login(){
         const auth = getAuth();
         const database = getDatabase();
+        
 
         // Validating password
         if (password.length <= 5){
@@ -38,7 +37,7 @@ const LoginPage = ({ navigation }) =>{
                 if(snapshot.exists()){
                     // Data exists in the document
                     const data = snapshot.val();
-                    setUserData(data)
+                    navigation.navigate('Home');
                     // Save user session
                     saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...data });
                 }
@@ -49,8 +48,6 @@ const LoginPage = ({ navigation }) =>{
             .catch((err)=>{
                 console.error('Error retrieving user data:', err);
             })
-            alert('You Logged In Successfully !');
-            navigation.navigate('Dashboard')
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -58,6 +55,7 @@ const LoginPage = ({ navigation }) =>{
             console.error('Sign-in error:', errorCode, errorMessage);
         });
     }
+
 
     return(
         <ScrollView>
@@ -123,7 +121,7 @@ const styles = StyleSheet.create({
         marginLeft: '8%',
         fontWeight: 'bold',
         color: '#13BC9E'
-    }
+    } 
 
 })
 

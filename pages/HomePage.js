@@ -1,33 +1,36 @@
-import React, {useEffect} from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import React from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
 import { getUserSession } from '../SessionManager/SessionManager';
 
-import MyButton from "../components/MyButton";
-
 const HomePage = ({ navigation }) =>{
 
-    useEffect(() => {
+    useFocusEffect(() => {
         const checkUserSession = async () => {
             const userSession = await getUserSession();
-            if (userSession) {
-                console.log('logged in', userSession)
-                navigation.navigate('Dashboard')
-            } else {
-                console.log('not logged in')   
+            if (userSession && userSession.Type == 'medical') {
+                navigation.navigate('MedicalCenterDashboard')  
+            } 
+            else if (userSession && userSession.Type == 'user') {   
+                navigation.navigate('UserDashboard')    
             }
         };
         checkUserSession();
-    }, []);
+    });
 
     return(
         <View style={styles.view}>
             <ToolBarWithoutIcon/>
             <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
 
-            <MyButton title="Login" onPress={() => navigation.navigate('Login')}/>
-            <Text></Text>
-            <MyButton title="Register" onPress={() => navigation.navigate('RegisterSelection')}/>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.text}>Login</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('RegisterSelection')}>
+                <Text style={styles.text}>Register</Text>
+            </TouchableOpacity>
 
             <Text style={styles.text}></Text>
         </View>
@@ -45,6 +48,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#13BC9E',
         height: '100%' 
     }, 
+
+    button:{
+        backgroundColor: 'white',
+        width: '50%',
+        height: 50,
+        borderRadius: 10,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20
+    },
+
+    text:{
+        color: '#13BC9E',
+        fontSize: 20,
+        fontWeight: 'bold'
+    }
 })
 
 export default HomePage;
