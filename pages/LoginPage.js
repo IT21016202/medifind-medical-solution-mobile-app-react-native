@@ -1,12 +1,64 @@
-import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
+import React, { useState } from "react";
+import { Image, StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
+import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import { saveUserSession } from "../SessionManager/SessionManager";
+import { getDatabase, ref, get } from 'firebase/database';
+
 import MyButton from "../components/MyButton";
 import TextInputBox from "../components/TextInputBox";
 
-const LoginPage = () =>{
+const LoginPage = ({ navigation }) =>{
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function login(){
+        const auth = getAuth();
+        const database = getDatabase();
+        
+
+        // Validating password
+        if (password.length <= 5){
+            alert("Password should be at least 6 characters !");
+            return;
+        }
+    
+        // Sign in using firebase authentication
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential.user.uid);
+
+            // Create a reference to the specific document.
+            const userRef = ref(database, 'Users/' + userCredential.user.uid);
+
+            // Retrieve data from the specific user's document
+            get(userRef)
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    // Data exists in the document
+                    const data = snapshot.val();
+                    navigation.navigate('Home');
+                    // Save user session
+                    saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...data });
+                }
+                else{
+                    console.log('User Data Not Found !');
+                }
+            })
+            .catch((err)=>{
+                console.error('Error retrieving user data:', err);
+            })
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Sign-in error:', errorCode, errorMessage);
+        });
+    }
+
+
     return(
-        <View>
+        <ScrollView>
             {/* <ToolBarWithoutIcon/> */}
             <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
 
@@ -15,19 +67,18 @@ const LoginPage = () =>{
 
             <Text style={styles.loginText}>Please Login Your Account to Continue...</Text>
 
-            <TextInputBox placeH="example@email.com"/>
-            <TextInputBox placeH="Password"/>
+            <TextInputBox placeH="example@email.com" name="email" value={email} onChangeT={text => setEmail(text)}></TextInputBox>
+            <TextInputBox placeH="Password" name="password" value={password} onChangeT={text => setPassword(text)}></TextInputBox>
  
             <MyButton onPress={login} title="Login"/>
 
-            <Text style={styles.dont}>Don't have and account ? Sign Up</Text>
-        </View>
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterSelection')}>
+                <Text style={styles.dont}>Don't have and account ? Sign Up</Text>
+            </TouchableOpacity>
+        </ScrollView>
     );
 }
 
-function login(){
-    alert("Login");
-}
 
 const styles = StyleSheet.create({
     logo:{
@@ -70,7 +121,7 @@ const styles = StyleSheet.create({
         marginLeft: '8%',
         fontWeight: 'bold',
         color: '#13BC9E'
-    }
+    } 
 
 })
 

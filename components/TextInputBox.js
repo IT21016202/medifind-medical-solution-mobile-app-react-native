@@ -4,7 +4,12 @@ import { View, StyleSheet, TextInput } from "react-native";
 const TextInputBox = (props) =>{
     return(
         <View style={styles.view}>
-            <TextInput style={styles.textInput} placeholder={props.placeH}></TextInput>
+            <TextInput style={styles.textInput} 
+                placeholder={props.placeH}
+                name={props.name} 
+                value={props.value} 
+                onChangeText={props.onChangeT}
+            ></TextInput>
         </View>
     )
 }
