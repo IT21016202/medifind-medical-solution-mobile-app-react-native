@@ -1,9 +1,10 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Image, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import './Firebase/FirebaseConfing'
 
+//Pages
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MedicalCenterRegisterPage from "./pages/MedicalCenterRegisterPage";
@@ -11,6 +12,10 @@ import RegistrationSelection from "./pages/RegistrationSelection";
 import UserDashboard from "./pages/UserDashboard";
 import UserRegisterPage from "./pages/UserRegisterPage";
 import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
+import Profile from "./pages/Profile";
+import Notification from "./pages/Notification";
+import AdminDashboard from "./pages/AdminDashboard";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -20,13 +25,17 @@ const App = () =>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
+      {/* <Stack.Screen name="Profile" component={Profile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/> */}
+
         <Stack.Screen name="Home" component={HomePage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}} />
-        <Stack.Screen name="UserDashboard" component={UserDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff' , headerTitle: '', headerRight: () => (<View><TouchableOpacity><Image source={require('./assets/images/menu-white.png')} style={styles.menuLogo}></Image></TouchableOpacity><TouchableOpacity><Image source={require('./assets/images/profile.png')} style={styles.profileLogo}></Image></TouchableOpacity><TouchableOpacity><Image source={require('./assets/images/notification-white.png')} style={styles.notificationLogo}></Image></TouchableOpacity></View>)}}/>
+        <Stack.Screen name="UserDashboard" component={UserDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff' , headerTitle: ''}}/>
         <Stack.Screen name="Login" component={LoginPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="RegisterSelection" component={RegistrationSelection} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterRegistration" component={MedicalCenterRegisterPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="UserRegistration" component={UserRegisterPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
-        <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: '', headerRight: () => (<View><TouchableOpacity><Image source={require('./assets/images/menu-white.png')} style={styles.menuLogo}></Image></TouchableOpacity><TouchableOpacity><Image source={require('./assets/images/profile.png')} style={styles.profileLogo}></Image></TouchableOpacity><TouchableOpacity><Image source={require('./assets/images/notification-white.png')} style={styles.notificationLogo}></Image></TouchableOpacity></View>)}}/>
+        <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="Notification" component={Notification} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="AdminDashboard" component={AdminDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -34,7 +43,7 @@ const App = () =>{
 }
 
 const gotoProfile = () => {
-  
+
 }
 
 const gotoMenu = () => {

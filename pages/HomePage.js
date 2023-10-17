@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ToolBarWithoutIcon from "../components/ToolBarWithoutIcon";
@@ -6,18 +6,29 @@ import { getUserSession } from '../SessionManager/SessionManager';
 
 const HomePage = ({ navigation }) =>{
 
+    const [user, setUser] = useState(null);
+
+
     useFocusEffect(() => {
+        
         const checkUserSession = async () => {
             const userSession = await getUserSession();
+            setUser(userSession);
             if (userSession && userSession.Type == 'medical') {
                 navigation.navigate('MedicalCenterDashboard')  
             } 
             else if (userSession && userSession.Type == 'user') {   
                 navigation.navigate('UserDashboard')    
             }
+            else if (userSession && userSession.Type == 'doctor') {
+                navigation.navigate('DoctorDashboard')    
+            }
+            else if (userSession && userSession.Type == 'admin') {
+                navigation.navigate('AdminDashboard')    
+            }
         };
         checkUserSession();
-    });
+    },[]);
 
     return(
         <View style={styles.view}>
@@ -31,7 +42,7 @@ const HomePage = ({ navigation }) =>{
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('RegisterSelection')}>
                 <Text style={styles.text}>Register</Text>
             </TouchableOpacity>
-
+   
             <Text style={styles.text}></Text>
         </View>
     );

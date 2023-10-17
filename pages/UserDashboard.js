@@ -1,8 +1,20 @@
 import React, {useEffect, useState} from 'react'
+import { useFocusEffect } from '@react-navigation/native';
 import { Text, Image, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native";
 import { getUserSession, clearUserSession } from '../SessionManager/SessionManager';
 
 const UserDashboard = ({navigation}) => {
+
+    const [user, setUser] = useState(null);
+
+    useFocusEffect(() => {
+        const checkUserSession = async () => {
+            const userSession = await getUserSession();
+            setUser(userSession);
+        };
+        checkUserSession();
+    });
+
 
     function logout() {
         clearUserSession();
