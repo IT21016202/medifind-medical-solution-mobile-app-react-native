@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import BloodButton from '../components/BloodButton';
 import SubmitButton from '../components/SubmitButton';
 import {
@@ -9,18 +9,15 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
-  View
+  View,
 } from 'react-native';
 
-
 const RequestBlood = ({navigation}) => {
+  const [selectedButton, setSelectedButton] = useState('A+');
 
-    const [selectedButton, setSelectedButton] = useState("A+");
-
-    const handleButtonPress = (text) => {
-      setSelectedButton(text);
-    };
-
+  const handleButtonPress = text => {
+    setSelectedButton(text);
+  };
 
   return (
     <ScrollView style={styles.view}>
@@ -37,59 +34,59 @@ const RequestBlood = ({navigation}) => {
 
       <Text style={styles.text}>Select Blood Type</Text>
 
-     
       <View style={styles.buttonRow}>
         <BloodButton
           text="A+"
-          selected={selectedButton === "A+"}
-          onPress={() => handleButtonPress("A+")}
+          selected={selectedButton === 'A+'}
+          onPress={() => handleButtonPress('A+')}
         />
         <BloodButton
           text="A-"
-          selected={selectedButton === "A-"}
-          onPress={() => handleButtonPress("A-")}
+          selected={selectedButton === 'A-'}
+          onPress={() => handleButtonPress('A-')}
         />
         <BloodButton
           text="B+"
-          selected={selectedButton === "B+"}
-          onPress={() => handleButtonPress("B+")}
+          selected={selectedButton === 'B+'}
+          onPress={() => handleButtonPress('B+')}
         />
         <BloodButton
           text="B-"
-          selected={selectedButton === "B-"}
-          onPress={() => handleButtonPress("B-")}
+          selected={selectedButton === 'B-'}
+          onPress={() => handleButtonPress('B-')}
         />
-
-       
       </View>
 
       <View style={styles.buttonRow}>
         <BloodButton
           text="AB+"
-          selected={selectedButton === "AB+"}
-          onPress={() => handleButtonPress("AB+")}
+          selected={selectedButton === 'AB+'}
+          onPress={() => handleButtonPress('AB+')}
         />
         <BloodButton
           text="AB-"
-          selected={selectedButton === "AB-"}
-          onPress={() => handleButtonPress("AB-")}
+          selected={selectedButton === 'AB-'}
+          onPress={() => handleButtonPress('AB-')}
         />
         <BloodButton
           text="O+"
-          selected={selectedButton === "O+"}
-          onPress={() => handleButtonPress("O+")}
+          selected={selectedButton === 'O+'}
+          onPress={() => handleButtonPress('O+')}
         />
         <BloodButton
           text="O-"
-          selected={selectedButton === "O-"}
-          onPress={() => handleButtonPress("O-")}
+          selected={selectedButton === 'O-'}
+          onPress={() => handleButtonPress('O-')}
         />
       </View>
 
       <View style={styles.container}>
-      <SubmitButton text="Submit" />
-    </View>
-
+        <SubmitButton text="Submit" />
+        <SubmitButton
+          text="All other UI's"
+          onPress={() => navigation.navigate('TemporaryPage')}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -132,11 +129,9 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    justifyContent: 'center',  // Center vertically
-    alignItems: 'center',      // Center horizontally
+    justifyContent: 'center', // Center vertically
+    alignItems: 'center', // Center horizontally
   },
-
-
 });
 
 export default RequestBlood;

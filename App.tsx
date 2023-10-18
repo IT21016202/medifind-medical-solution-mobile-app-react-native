@@ -18,6 +18,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 
 //Blood Pages
 import RequestBlood from "./pages/RequestBlood";
+import TemporaryPage from "./pages/TemporaryPage";
+import BloodRequestPage from "./pages/BloodRequestFeed";
 
 
 
@@ -40,6 +42,8 @@ const App = () =>{
         <Stack.Screen name="Notification" component={Notification} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="RequestBlood" component={RequestBlood} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="TemporaryPage" component={TemporaryPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="BloodRequestPage" component={BloodRequestPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

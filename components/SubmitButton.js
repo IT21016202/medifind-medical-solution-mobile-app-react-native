@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 
-const SubmitButton = ({text}) => {
+const SubmitButton = ({text, onPress}) => {
   return (
-    <TouchableOpacity style={[styles.button]}>
+    <TouchableOpacity style={[styles.button]} onPress={onPress}>
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
   );
