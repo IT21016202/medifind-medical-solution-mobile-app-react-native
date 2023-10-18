@@ -16,6 +16,9 @@ import Profile from "./pages/Profile";
 import Notification from "./pages/Notification";
 import AdminDashboard from "./pages/AdminDashboard";
 
+//Blood Pages
+import RequestBlood from "./pages/RequestBlood";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +39,7 @@ const App = () =>{
         <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="RequestBlood" component={RequestBlood} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
