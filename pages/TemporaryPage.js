@@ -18,8 +18,14 @@ const TemporaryPage = ({navigation}) => {
         text="Blood Request Feed"
         onPress={() => navigation.navigate('BloodRequestPage')}
       />
-      <SubmitButton text="Blood Searcher details" />
-      <SubmitButton text="Chart T" onPress={() => navigation.navigate('Chart')} />
+      <SubmitButton
+        text="Blood Searcher details"
+        onPress={() => navigation.navigate('BloodSearcherDetails')}
+      />
+      <SubmitButton
+        text="Chart T"
+        onPress={() => navigation.navigate('Chart')}
+      />
     </ScrollView>
   );
 };

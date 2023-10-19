@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import BloodButton from '../components/BloodButton';
 import SubmitButton from '../components/SubmitButton';
 import {app} from '../Firebase/FirebaseConfing.js';
-import {getDatabase, ref, set} from 'firebase/database';
+import {getDatabase, ref, push, set} from 'firebase/database';
+
 import {
   Text,
   TextInput,
@@ -28,7 +29,10 @@ const RequestBlood = ({navigation}) => {
 
   const handleDataSubmission = () => {
     // Create a new reference under 'bloodRequests'
-    const newRequestRef = ref(database, 'bloodRequests');
+    const bloodRequestsRef = ref(database, 'bloodRequests');
+
+    // Generate a new unique key for the record
+    const newRequestRef = push(bloodRequestsRef);
 
     // Set the data to be inserted
     const requestData = {
@@ -37,7 +41,7 @@ const RequestBlood = ({navigation}) => {
       description,
     };
 
-    // Use the 'set' function to insert the data
+    // Use the 'set' function with the generated key to insert the data
     set(newRequestRef, requestData)
       .then(() => {
         console.log('Data inserted successfully');
