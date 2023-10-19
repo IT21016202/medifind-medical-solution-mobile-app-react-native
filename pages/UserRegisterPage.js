@@ -34,6 +34,7 @@ const UserRegisterPage = ({navigation}) =>{
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const userData = {
+                ID: userCredential.user.uid,
                 Name: name,
                 Mobile: mobileNo,
                 Address: address,

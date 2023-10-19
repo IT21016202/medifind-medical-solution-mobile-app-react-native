@@ -46,6 +46,7 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const userData = {
+                ID: userCredential.user.uid,
                 Name: name,
                 Mobile: mobileNo,
                 PharmacyName: pharmacyName, 
@@ -98,7 +99,7 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Description" name="description" value={description} onChangeText={text => setDescription(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Facilities" name="facilities" value={facilities} onChangeText={text => setFacilities(text)}></TextInput>
             <Text style={{paddingLeft: '8%'}}>Certificate</Text>
-            <Text style={{paddingLeft: '8%'}}>Image</Text>
+
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Password" name="password" value={password} onChangeText={text => setPassword(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Re-Enter Password" name="re-password" value={rePassword} onChangeText={text => setRePassword(text)}></TextInput>
 

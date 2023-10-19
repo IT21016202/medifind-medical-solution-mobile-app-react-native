@@ -15,7 +15,9 @@ import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
 import Profile from "./pages/Profile";
 import Notification from "./pages/Notification";
 import AdminDashboard from "./pages/AdminDashboard";
-import MedicalCenters from "./pages/MedicalCenters";
+import NearByMedicalCenters from "./pages/NearByMedicalCenters";
+import AllMedicalCenters from "./pages/AllMedicalCenters";
+import OneMedicalCenter from "./pages/OneMedicalCenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +36,9 @@ const App = () =>{
         <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
-        <Stack.Screen name="MedicalCenters" component={MedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="NearByMedicalCenters" component={NearByMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="AllMedicalCenters" component={AllMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="OneMedicalCenter" component={OneMedicalCenter} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

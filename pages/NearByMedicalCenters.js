@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get } from 'firebase/database';
-import { ScrollView, Text, View, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Touchable, TouchableOpacity, Button } from 'react-native';
 import { getUserSession } from '../SessionManager/SessionManager';
 
-const MedicalCenters = () => {
+const NearByMedicalCenters = ({navigation}) => {
 
     const database = getDatabase();
     const [medicalCenters, setMedicalCenters] = useState([]); // Array of medical centers
@@ -28,7 +28,7 @@ const MedicalCenters = () => {
                 // Data exists in the document
                 const data = snapshot.val();
                 const medicalUsers = Object.values(data).filter((user) => user.Type === 'medical' && user.City === userData.City);
-                console.log('Medical users',medicalUsers)
+                
                 if (medicalUsers.length > 0) {
                     // At this point, `medicalUsers` contains the filtered user data
                     setMedicalCenters(medicalUsers);
@@ -45,7 +45,11 @@ const MedicalCenters = () => {
         .catch((err)=>{
             console.error('Error retrieving user data:', err);
         })
-    }, [])
+    }, []);
+
+    // function goToMedicalCenter(id) {
+    //     navigation.navigate('OneMedicalCenter', {id: id})
+    // }
 
   return (
     <ScrollView>
@@ -59,10 +63,11 @@ const MedicalCenters = () => {
                     <Text>{'medicalCenter.Email'}</Text>
                     <Text>{'Facilities'}</Text>
                     <Text>City : {medicalCenter.City}</Text>
+                    <Button title="View" onPress={()=>navigation.navigate('OneMedicalCenter', {id: medicalCenter.ID})}/>
                 </View>
             )
         })}
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('AllMedicalCenters')}>
             <Text style={styles.btntxt}>Show All Centers</Text>
         </TouchableOpacity>
     </ScrollView>
@@ -111,4 +116,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default MedicalCenters
+export default NearByMedicalCenters
