@@ -35,9 +35,9 @@ const UserDashboard = ({navigation}) => {
                     <Text style={styles.text}>Appoinments</Text>
             </TouchableOpacity> 
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MedicalCenters')}>
                     <Image style={styles.image} source={require('../assets/images/icons/icon(4).png')}/>
-                    <Text style={styles.text}>Medical Center</Text>
+                    <Text style={styles.text}>Medical Centers</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button}>

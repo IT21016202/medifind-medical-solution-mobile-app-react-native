@@ -15,8 +15,7 @@ import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
 import Profile from "./pages/Profile";
 import Notification from "./pages/Notification";
 import AdminDashboard from "./pages/AdminDashboard";
-
-
+import MedicalCenters from "./pages/MedicalCenters";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +25,6 @@ const App = () =>{
     <NavigationContainer>
       <Stack.Navigator>
       {/* <Stack.Screen name="Profile" component={Profile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/> */}
-
         <Stack.Screen name="Home" component={HomePage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff' , headerTitle: ''}}/>
         <Stack.Screen name="Login" component={LoginPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
@@ -36,22 +34,11 @@ const App = () =>{
         <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="MedicalCenters" component={MedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 
-}
-
-const gotoProfile = () => {
-
-}
-
-const gotoMenu = () => {
-  
-}
-
-const gotoNotification = () => {
-  
 }
 
 const styles = StyleSheet.create({

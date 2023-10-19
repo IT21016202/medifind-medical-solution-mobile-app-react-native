@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import { getUserSession } from '../SessionManager/SessionManager';
 import { getDatabase, ref, get, set } from 'firebase/database';
 

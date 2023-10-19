@@ -28,7 +28,7 @@ const HomePage = ({ navigation }) =>{
             }
         };
         checkUserSession();
-    },[]);
+    });
 
     return(
         <View style={styles.view}>

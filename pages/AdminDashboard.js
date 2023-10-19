@@ -6,7 +6,7 @@ const AdminDashboard = ({navigation}) => {
 
     function logout() {
         clearUserSession();
-        navigation.navigate('Home');
+        navigation.navigate('Home');   
     }
 
     return(
