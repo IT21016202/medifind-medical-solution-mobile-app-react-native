@@ -19,6 +19,7 @@ const TemporaryPage = ({navigation}) => {
         onPress={() => navigation.navigate('BloodRequestPage')}
       />
       <SubmitButton text="Blood finder details" />
+      <SubmitButton text="Chart T" onPress={() => navigation.navigate('Chart')} />
     </ScrollView>
   );
 };

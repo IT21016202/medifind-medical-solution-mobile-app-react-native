@@ -10,7 +10,6 @@ import {
   Button,
   View,
 } from 'react-native';
-import SubmitButton from '../components/SubmitButton';
 
 const BloodRequestPage = ({navigation}) => {
   const [search, setSearch] = useState('');
@@ -53,10 +52,14 @@ const BloodRequestPage = ({navigation}) => {
             />
             <Text style={styles.text3}>A +</Text>
           </View>
-          {/* <View style={styles.buttonContainer}>
-            <SubmitButton text="Decline" />
-            <SubmitButton text="Accept" />
-          </View> */}
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.declinebutton]} >
+            <Text style={styles.declinebuttonText}>Decline</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.acceptbutton]} >
+            <Text style={styles.declinebuttonText}>Accept</Text>
+          </TouchableOpacity>
         </View>
       </Card>
     </ScrollView>
@@ -140,6 +143,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10, // Add margin as needed
+  },
+
+  declinebutton: {
+    marginTop: 20,
+    width: '40%',
+    backgroundColor: '#F21B1B',
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+  },
+  declinebuttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  acceptbutton: {
+    marginTop: 20,
+    width: '40%',
+    backgroundColor: '#13BC9E',
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
   },
 });
 
