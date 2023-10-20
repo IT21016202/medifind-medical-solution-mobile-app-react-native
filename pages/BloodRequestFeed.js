@@ -66,10 +66,11 @@ const BloodRequestPage = ({navigation}) => {
     const newAcceptedRequestRef = push(acceptedRequestsRef);
 
     const acceptedRequest = {
-      user: userSession.uid,
+      donorid: userSession.uid,
       location: request.location,
       bloodType: request.bloodType,
       description: request.description,
+      userid: request.userid,
       // Include other properties from the request
     };
 

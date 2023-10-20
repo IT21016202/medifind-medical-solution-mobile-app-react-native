@@ -39,7 +39,7 @@ const RequestBlood = ({navigation}) => {
 
     // Set the data to be inserted
     const requestData = {
-      user: userSession.uid,
+      userid: userSession.uid,
       location,
       bloodType: selectedButton,
       description,

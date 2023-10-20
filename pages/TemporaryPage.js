@@ -26,6 +26,11 @@ const TemporaryPage = ({navigation}) => {
         text="Blood Donor List"
         onPress={() => navigation.navigate('BloodDonorList')}
       />
+
+      <SubmitButton
+        text="Accepted Requests"
+        onPress={() => navigation.navigate('AcceptedRequestsPage')}
+      />
       <SubmitButton
         text="Chart T"
         onPress={() => navigation.navigate('Chart')}
