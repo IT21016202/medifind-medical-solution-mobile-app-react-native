@@ -14,6 +14,7 @@ import {
   Button,
   View,
 } from 'react-native';
+import {getUserSession} from '../SessionManager/SessionManager';
 
 // Get a reference to the Firebase Realtime Database
 const database = getDatabase(app);
@@ -27,15 +28,18 @@ const RequestBlood = ({navigation}) => {
     setSelectedButton(text);
   };
 
-  const handleDataSubmission = () => {
+  const handleDataSubmission = async () => {
     // Create a new reference under 'bloodRequests'
     const bloodRequestsRef = ref(database, 'bloodRequests');
 
     // Generate a new unique key for the record
     const newRequestRef = push(bloodRequestsRef);
 
+    const userSession = await getUserSession();
+
     // Set the data to be inserted
     const requestData = {
+      user: userSession.uid,
       location,
       bloodType: selectedButton,
       description,

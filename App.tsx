@@ -20,7 +20,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import RequestBlood from "./pages/RequestBlood";
 import TemporaryPage from "./pages/TemporaryPage";
 import BloodRequestPage from "./pages/BloodRequestFeed";
-import BloodSearcherDetails from "./pages/BloodSearcherDetails"
+import BloodSearcherDetails from "./pages/BloodSearcherDetails";
+import BloodDonorRegistration from "./pages/BloodDonorRegistration";
+import BloodDonorList from "./pages/BloodDonorList";
 import Chart from "./pages/Chart";
 
 
@@ -48,6 +50,8 @@ const App = () =>{
         <Stack.Screen name="BloodRequestPage" component={BloodRequestPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Chart" component={Chart} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="BloodSearcherDetails" component={BloodSearcherDetails} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="BloodDonorRegistration" component={BloodDonorRegistration} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="BloodDonorList" component={BloodDonorList} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
