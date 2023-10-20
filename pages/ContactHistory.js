@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ImageBackground, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'; // Import TouchableOpacity
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { getDatabase, ref, get } from 'firebase/database';
 
 const ContactHistoryPage = () => {
@@ -9,6 +9,7 @@ const ContactHistoryPage = () => {
   const [recentDoctors, setRecentDoctors] = useState([]);
   const [recentPharmacies, setRecentPharmacies] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     // Initialize Firebase and create a reference to the database
@@ -52,11 +53,12 @@ const ContactHistoryPage = () => {
   );
 
   const handleUserItemClick = (user) => {
-    // Handle the user item click, e.g., navigate to a user profile page
-    console.log('User clicked:', user);
-    // You can navigate to the user's profile page using the navigation object.
-    // Example:
-    // navigation.navigate('UserProfile', { user });
+    // Navigate to the DoctorDetails screen and pass user details as route params
+    navigation.navigate('DoctorHistoryPage', {
+      doctorName: user.Name,
+      doctorType: user.Type,
+      doctorMobile: user.Mobile,
+    });
   };
 
   return (
@@ -76,7 +78,11 @@ const ContactHistoryPage = () => {
             onChangeText={(text) => setSearchText(text)}
           />
           <View style={styles.bottomContainer}>
-            <TouchableOpacity onPress={() => handleUserItemClick(recentDoctors[0])}>
+            <TouchableOpacity onPress={() => navigation.navigate('DoctorHistoryPage', {
+      doctorName: recentDoctors[0].Name,
+      doctorType: recentDoctors[0].Type,
+      doctorMobile: recentDoctors[0].Mobile,
+    })}>
               <View style={[styles.userListContainer, styles.transparentBackground, styles.mostRecentContainer]}>
                 <Text style={[styles.sectionHeader, styles.sectionHeaderMargin]}>Most Recent</Text>
                 {recentDoctors.length > 0 ? (
@@ -100,7 +106,11 @@ const ContactHistoryPage = () => {
               <Text style={[styles.sectionHeader, styles.sectionHeaderMargin]}>Recent Doctors</Text>
               <ScrollView horizontal>
                 {filteredRecentDoctors.map((doctor, index) => (
-                  <TouchableOpacity key={index} onPress={() => handleUserItemClick(doctor)}>
+                  <TouchableOpacity key={index} onPress={() => navigation.navigate('DoctorHistoryPage', {
+                    doctorName: doctor.Name,
+                    doctorType: doctor.Type,
+                    doctorMobile: doctor.Mobile,
+                  })}>
                     <View style={styles.doctorItem}>
                       <Image
                         source={{ uri: 'https://randomuser.me/api/portraits/men/75.jpg' }}
@@ -120,7 +130,11 @@ const ContactHistoryPage = () => {
               <Text style={[styles.sectionHeader, styles.sectionHeaderMargin]}>Recent Pharmacies</Text>
               <ScrollView horizontal>
                 {filteredRecentPharmacies.map((pharmacy, index) => (
-                  <TouchableOpacity key={index} onPress={() => handleUserItemClick(pharmacy)}>
+                  <TouchableOpacity key={index} onPress={() => navigation.navigate('DoctorHistoryPage', {
+                    doctorName: pharmacy.Name,
+                    doctorType: pharmacy.Type,
+                    doctorMobile: pharmacy.Mobile,
+                  })}>
                     <View style={styles.doctorItem}>
                       <Image
                         source={{ uri: 'https://randomuser.me/api/portraits/men/75.jpg' }}
