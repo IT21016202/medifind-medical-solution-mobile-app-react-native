@@ -73,7 +73,7 @@ const ProfilePage = () => {
             <Text style={styles.buttonText}>All Appointments</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ContactHistoryPage')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ContactHistoryPage', {username: userData?.Name || 'Loading...',})}>
             <Text style={styles.buttonText}>Contact History</Text>
           </TouchableOpacity>
 

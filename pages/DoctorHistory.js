@@ -24,16 +24,15 @@ const getRandomAppointmentDates = (count) => {
   const DoctorDetails = () => {
     const route = useRoute();
     const navigation = useNavigation();
-    const { doctorName, doctorType, doctorMobile } = route.params; // Receive user details from route params
+    const { doctorName, doctorType, doctorMobile, username } = route.params; // Receive user details from route params
   
     const [lastAppointment, setLastAppointment] = useState('2023.10.10 | 5.30 P.M.');
     const [recentAppointments, setRecentAppointments] = useState(getRandomAppointmentDates(6)); // 6 random dates for demonstration
   
-    const handleAppointmentClick = (appointment) => {
-      // Handle the click on an appointment date here
-      // You can add navigation or any other actions you want
-      console.log('Clicked on appointment:', appointment);
-    };
+    const handleAppointmentClick = (date) => {
+        // Navigate to PrescriptionDetails with the selected date
+        navigation.navigate('PrescriptionDetails', { date, doctorName, doctorType, doctorMobile, username });
+      };
 
     const updateLastAppointment = () => {
         // Sort the appointment dates to find the closest one
@@ -141,7 +140,7 @@ const getRandomAppointmentDates = (count) => {
       marginTop: 10,
     },
     lastAppointmentContainer: {
-      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      backgroundColor: 'rgba(255, 255, 255, 1.0)',
       padding: 10,
       borderRadius: 10,
       width: '70%', // Set the width to 70%
@@ -202,7 +201,7 @@ const getRandomAppointmentDates = (count) => {
       width: '70%', // Set the width to 70%
     },
     appointmentDateContainer: {
-      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      backgroundColor: 'rgba(255, 255, 255, 1.0)',
       padding: 10,
       borderRadius: 10,
       marginVertical: 5,

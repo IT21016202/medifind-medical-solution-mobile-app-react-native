@@ -8,6 +8,9 @@ const UserDashboard = ({navigation}) => {
         clearUserSession();
         navigation.navigate('Home');
     }
+    function navigateToProfile() {
+        navigation.navigate('ProfilePage'); // Navigate to the ProfilePage
+    }
 
     return(
         <ScrollView style={styles.view}>
@@ -18,7 +21,7 @@ const UserDashboard = ({navigation}) => {
                     <Text style={styles.text}>Find a Doctor</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={navigateToProfile}>
                     <Image style={styles.image} source={require('../assets/images/icons/icon(5).png')}/>
                     <Text style={styles.text}>Appoinments</Text>
             </TouchableOpacity> 

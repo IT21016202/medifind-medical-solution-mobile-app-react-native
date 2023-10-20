@@ -10,6 +10,8 @@ const ContactHistoryPage = () => {
   const [recentPharmacies, setRecentPharmacies] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [userData, setUserData] = useState(null);
+  const route = useRoute();
+  const username = route.params?.username;
 
   useEffect(() => {
     // Initialize Firebase and create a reference to the database
@@ -82,6 +84,7 @@ const ContactHistoryPage = () => {
       doctorName: recentDoctors[0].Name,
       doctorType: recentDoctors[0].Type,
       doctorMobile: recentDoctors[0].Mobile,
+      username: username,
     })}>
               <View style={[styles.userListContainer, styles.transparentBackground, styles.mostRecentContainer]}>
                 <Text style={[styles.sectionHeader, styles.sectionHeaderMargin]}>Most Recent</Text>
@@ -110,6 +113,7 @@ const ContactHistoryPage = () => {
                     doctorName: doctor.Name,
                     doctorType: doctor.Type,
                     doctorMobile: doctor.Mobile,
+                    username: username,
                   })}>
                     <View style={styles.doctorItem}>
                       <Image
@@ -134,6 +138,7 @@ const ContactHistoryPage = () => {
                     doctorName: pharmacy.Name,
                     doctorType: pharmacy.Type,
                     doctorMobile: pharmacy.Mobile,
+                    username: username,
                   })}>
                     <View style={styles.doctorItem}>
                       <Image
