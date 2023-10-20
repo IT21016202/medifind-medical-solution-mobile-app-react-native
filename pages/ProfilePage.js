@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ImageBackg
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const auth = getAuth();
@@ -68,11 +70,11 @@ const ProfilePage = () => {
 
         <View style={styles.buttonsSection}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Appointments</Text>
+            <Text style={styles.buttonText}>All Appointments</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Payment Method</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ContactHistoryPage')}>
+            <Text style={styles.buttonText}>Contact History</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button}>
