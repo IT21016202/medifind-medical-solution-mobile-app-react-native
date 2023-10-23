@@ -171,16 +171,18 @@ const BloodDonorRegistration = ({navigation}) => {
         placeholder="Enter Latitude"
         placeholderTextColor="gray"
         name="latitude"
-        value={latitude}
-        onChangeText={text => setLatitude(text)}></TextInput>
+        value={latitude.toString()} // Convert the number back to a string for input
+        onChangeText={text => setLatitude(parseFloat(text))} // Parse the input as a float
+      />
 
       <TextInput
         style={{paddingLeft: '8%', color: 'black'}}
         placeholder="Enter Longitude"
         placeholderTextColor="gray"
         name="longitude"
-        value={longitude}
-        onChangeText={text => setLongitude(text)}></TextInput>
+        value={longitude.toString()} // Convert the number back to a string for input
+        onChangeText={text => setLongitude(parseFloat(text))} // Parse the input as a float
+      />
 
       {/* <DatePicker
         style={{width: '100%', paddingLeft: '8%'}}
