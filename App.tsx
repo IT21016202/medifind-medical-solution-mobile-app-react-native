@@ -12,7 +12,7 @@ import RegistrationSelection from "./pages/RegistrationSelection";
 import UserDashboard from "./pages/UserDashboard";
 import UserRegisterPage from "./pages/UserRegisterPage";
 import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
-import Profile from "./pages/Profile";
+import MedicalCenterProfile from "./pages/MedicalCenterProfile";
 import Notification from "./pages/Notification";
 import AdminDashboard from "./pages/AdminDashboard";
 import NearByMedicalCenters from "./pages/NearByMedicalCenters";
@@ -26,7 +26,6 @@ const App = () =>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
-      {/* <Stack.Screen name="Profile" component={Profile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/> */}
         <Stack.Screen name="Home" component={HomePage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff' , headerTitle: ''}}/>
         <Stack.Screen name="Login" component={LoginPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
@@ -39,6 +38,7 @@ const App = () =>{
         <Stack.Screen name="NearByMedicalCenters" component={NearByMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AllMedicalCenters" component={AllMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="OneMedicalCenter" component={OneMedicalCenter} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="MedicalCenterProfile" component={MedicalCenterProfile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

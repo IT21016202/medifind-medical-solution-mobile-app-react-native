@@ -23,6 +23,10 @@ const MedicalCenterDashboard = ({navigation}) => {
                 <Text style={styles.text}>Orders</Text>
             </TouchableOpacity> 
 
+            
+
+            <Button title='Profile' onPress={() => navigation.navigate('MedicalCenterProfile')}></Button>
+
             <Button title='Log Out' onPress={logout}></Button>
         </ScrollView>
     )
