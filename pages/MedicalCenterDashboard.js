@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text, Image, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native";
-import { clearUserSession } from '../SessionManager/SessionManager';
 
 const MedicalCenterDashboard = ({navigation}) => {
 
@@ -18,7 +17,10 @@ const MedicalCenterDashboard = ({navigation}) => {
                 <Text style={styles.text}>Orders</Text>
             </TouchableOpacity> 
 
-            
+            <TouchableOpacity style={styles.button}>
+                <Image style={styles.image} source={require('../assets/images/icons/icon(6).png')}/>
+                <Text style={styles.text}>Appoinments</Text>
+            </TouchableOpacity> 
 
             <Button title='Profile' onPress={() => navigation.navigate('MedicalCenterProfile')}></Button>
 

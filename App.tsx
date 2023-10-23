@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Image, TouchableOpacity, View, StyleSheet, Button } from "react-native";
-import './Firebase/FirebaseConfing'
+import './Firebase/FirebaseConfing';
 
 //Pages
 import HomePage from "./pages/HomePage";

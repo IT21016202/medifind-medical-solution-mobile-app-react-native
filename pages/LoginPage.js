@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import { saveUserSession } from "../SessionManager/SessionManager";
 import { getDatabase, ref, get } from 'firebase/database';
@@ -53,7 +53,7 @@ const LoginPage = ({ navigation }) =>{
             const errorCode = error.code;
             const errorMessage = error.message;
             //console.error('Sign-in error:', errorCode, errorMessage);
-            alert(errorCode);
+            alert("Invalid email or password !");
         });
     }
 

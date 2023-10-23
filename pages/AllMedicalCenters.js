@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get } from 'firebase/database';
 import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Button, FlatList, TextInput } from 'react-native';
-import TextInputBox from '../components/TextInputBox';
 
 const AllMedicalCenters = ({navigation}) => {
 
@@ -44,9 +43,7 @@ const AllMedicalCenters = ({navigation}) => {
     return (
         <ScrollView>
             <Text style={styles.title}>All Medical Centers</Text>
-
             <TextInput placeholder="Search" onChangeText={(text) => setSearchText(text)} value={searchText}/>
-
             {filteredMedicalCenters.map((medicalCenter, index) => {
                 return (
                     <View key={index} style={styles.card} >
@@ -61,7 +58,6 @@ const AllMedicalCenters = ({navigation}) => {
                 )
             })}
         </ScrollView>
-
     )
 }
 
