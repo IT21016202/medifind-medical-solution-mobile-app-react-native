@@ -25,6 +25,8 @@ const BloodDonorRegistration = ({navigation}) => {
   const [bloodType, setBloodType] = useState('A+'); // Default value
   const [location, setLocation] = useState('');
   const [lastDonatedDate, setLastDonatedDate] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -52,6 +54,8 @@ const BloodDonorRegistration = ({navigation}) => {
           BloodType: bloodType, // Save the selected blood type
           Location: location, // Save the selected location
           LastDonatedDate: lastDonatedDate, // Save the last donated date
+          Latitude: latitude,
+          Longitude: longitude,
           Type: 'donor',
           CreatedAt: new Date(),
           UpdatedAt: new Date(),
@@ -161,6 +165,22 @@ const BloodDonorRegistration = ({navigation}) => {
         name="lastDonatedDate"
         value={lastDonatedDate}
         onChangeText={text => setLastDonatedDate(text)}></TextInput>
+
+      <TextInput
+        style={{paddingLeft: '8%', color: 'black'}}
+        placeholder="Enter Latitude"
+        placeholderTextColor="gray"
+        name="latitude"
+        value={latitude}
+        onChangeText={text => setLatitude(text)}></TextInput>
+
+      <TextInput
+        style={{paddingLeft: '8%', color: 'black'}}
+        placeholder="Enter Longitude"
+        placeholderTextColor="gray"
+        name="longitude"
+        value={longitude}
+        onChangeText={text => setLongitude(text)}></TextInput>
 
       {/* <DatePicker
         style={{width: '100%', paddingLeft: '8%'}}

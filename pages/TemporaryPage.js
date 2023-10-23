@@ -31,9 +31,18 @@ const TemporaryPage = ({navigation}) => {
         text="Accepted Requests"
         onPress={() => navigation.navigate('AcceptedRequestsPage')}
       />
-      <SubmitButton
+      {/* <SubmitButton
         text="Chart T"
         onPress={() => navigation.navigate('Chart')}
+      /> */}
+      <SubmitButton
+        text="Profile"
+        onPress={() => navigation.navigate('Profile')}
+      />
+
+      <SubmitButton
+        text="DonorMapView"
+        onPress={() => navigation.navigate('DonorMapView')}
       />
     </ScrollView>
   );

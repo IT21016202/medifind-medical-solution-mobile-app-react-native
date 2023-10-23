@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {SearchBar, Card} from '@rneui/themed';
-import {ref, getDatabase, onValue, push, set} from 'firebase/database';
+import {SearchBar, Card, Button as RNEButton} from '@rneui/themed';
+import {ref, getDatabase, onValue, push, set, remove} from 'firebase/database';
 import {app} from '../Firebase/FirebaseConfing.js';
 import {getUserSession} from '../SessionManager/SessionManager';
 import {
@@ -21,6 +21,7 @@ const database = getDatabase(app);
 const BloodRequestPage = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [bloodRequests, setBloodRequests] = useState([]);
+  const [userSession, setUserSession] = useState(null);
 
   const updateSearch = text => {
     setSearch(text);
@@ -29,31 +30,23 @@ const BloodRequestPage = ({navigation}) => {
   // Set up a listener for 'bloodRequests' data
   const bloodRequestsRef = ref(database, 'bloodRequests');
 
+  const fetchBloodRequests = async () => {
+    const userSession = await getUserSession();
+    setUserSession(userSession);
+    const bloodRequestsRef = ref(database, 'bloodRequests');
+    onValue(bloodRequestsRef, snapshot => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const requestsArray = Object.values(data);
+        setBloodRequests(requestsArray);
+      } else {
+        setBloodRequests([]);
+      }
+    });
+  };
+
   useEffect(() => {
-    const fetchData = () => {
-      onValue(bloodRequestsRef, snapshot => {
-        if (snapshot.exists()) {
-          // Get the data as an object
-          const data = snapshot.val();
-          console.log('Fetched data:', data); // Log the data to the console
-          // Convert the data object into an array
-          const requestsArray = Object.values(data);
-
-          // Update the state with the fetched blood requests
-          setBloodRequests(requestsArray);
-        } else {
-          // If the data doesn't exist or has been removed, clear the state
-          setBloodRequests([]);
-        }
-      });
-    };
-
-    fetchData(); // Fetch data when the component mounts
-
-    // Clean up the listener when the component unmounts
-    return () => {
-      // Unsubscribe from the listener
-    };
+    fetchBloodRequests();
   }, []);
 
   const acceptRequest = async request => {
@@ -93,6 +86,28 @@ const BloodRequestPage = ({navigation}) => {
     console.log('Request declined');
   };
 
+  const editRequest = request => {
+    // Implement the logic to edit the request
+    console.log('Edit request:', request);
+    navigation.navigate('EditRequest', {request: request});
+    // You can navigate to an edit screen and pass the request details for editing
+    // For example, navigate to an edit screen with the request data
+    // navigation.navigate('EditRequest', { request });
+  };
+
+  const deleteRequest = request => {
+    const bloodRequestRef = ref(database, `bloodRequests/${request.id}`);
+    remove(bloodRequestRef)
+      .then(() => {
+        console.log('Request deleted');
+        Alert.alert('Success', 'Request successfully deleted');
+        fetchBloodRequests(); // Refresh the blood requests after deleting
+      })
+      .catch(error => {
+        console.error('Error deleting request:', error);
+      });
+  };
+
   return (
     <ScrollView style={styles.view}>
       <Text style={styles.topic}>Blood Request Feed</Text>
@@ -112,6 +127,7 @@ const BloodRequestPage = ({navigation}) => {
         console.log('Request:', request); // Log the request object
         console.log('Location:', request?.location); // Log location
         console.log('Blood Type:', request?.bloodType); // Log blood type
+        console.log('Request ID:', index);
 
         return (
           <Card key={index}>
@@ -147,6 +163,21 @@ const BloodRequestPage = ({navigation}) => {
                 <Text style={styles.declinebuttonText}>Accept</Text>
               </TouchableOpacity>
             </View>
+            {/* Add Edit and Delete buttons */}
+            {userSession && userSession.uid === request.userid && (
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.declinebutton}
+                  onPress={() => editRequest(request)}>
+                  <Text style={styles.editButtonText}>Edit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.acceptbutton}
+                  onPress={() => deleteRequest(request)}>
+                  <Text style={styles.deleteButtonText}>Delete</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </Card>
         );
       })}
@@ -220,33 +251,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     alignItems: 'center',
-  },
-
-  editButton: {
-    marginTop: 20,
-    width: '40%',
-    backgroundColor: 'blue', // Customize the edit button style
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-  },
-  editButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  deleteButton: {
-    marginTop: 20,
-    width: '40%',
-    backgroundColor: 'red', // Customize the delete button style
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-  },
-  deleteButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
 });
 

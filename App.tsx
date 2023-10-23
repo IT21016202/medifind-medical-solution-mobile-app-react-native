@@ -24,6 +24,8 @@ import BloodSearcherDetails from "./pages/BloodSearcherDetails";
 import BloodDonorRegistration from "./pages/BloodDonorRegistration";
 import BloodDonorList from "./pages/BloodDonorList";
 import AcceptedRequestsPage from "./pages/AcceptedRequestsPage";
+import EditRequest from "./pages/EditRequestScreen";
+// import DonorMapView from "./pages/DonorMapView";
 import Chart from "./pages/Chart";
 
 
@@ -54,6 +56,9 @@ const App = () =>{
         <Stack.Screen name="BloodDonorRegistration" component={BloodDonorRegistration} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="BloodDonorList" component={BloodDonorList} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AcceptedRequestsPage" component={AcceptedRequestsPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="Profile" component={Profile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="EditRequest" component={EditRequest} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        {/* <Stack.Screen name="DonorMapView" component={DonorMapView} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

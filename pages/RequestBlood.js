@@ -39,6 +39,7 @@ const RequestBlood = ({navigation}) => {
 
     // Set the data to be inserted
     const requestData = {
+      id: newRequestRef.key,
       userid: userSession.uid,
       location,
       bloodType: selectedButton,
@@ -49,6 +50,7 @@ const RequestBlood = ({navigation}) => {
     set(newRequestRef, requestData)
       .then(() => {
         console.log('Data inserted successfully');
+        console.log('Request data', newRequestRef.key);
         // Clear the input fields or do other actions as needed
         setLocation('');
         setDescription('');
