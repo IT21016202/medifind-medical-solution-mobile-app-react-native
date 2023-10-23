@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'rea
 import { getUserSession } from '../SessionManager/SessionManager';
 import { getDatabase, ref, get, set, update, remove } from 'firebase/database';
 import { getAuth, deleteUser} from 'firebase/auth';
+import { clearUserSession } from '../SessionManager/SessionManager';
 
 
 const MedicalCenterProfile = ({navigation}) => {
@@ -90,6 +91,12 @@ const MedicalCenterProfile = ({navigation}) => {
         });
     };
 
+
+    function logout() {
+        clearUserSession();
+        navigation.navigate('Home');
+    }
+
   
     return (
         <View style={styles.container}>
@@ -114,7 +121,7 @@ const MedicalCenterProfile = ({navigation}) => {
                 </TouchableOpacity>  
             </View>
 
-            <TouchableOpacity style={styles.btnLogout} onPress={() => navigation.navigate('MedicalCenterDashboard')}>
+            <TouchableOpacity style={styles.btnLogout} onPress={logout}>
                     <Text style={styles.btnText}>Log Out</Text>
             </TouchableOpacity>
             

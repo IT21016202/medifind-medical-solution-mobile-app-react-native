@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get } from 'firebase/database';
-import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Button, FlatList, TextInput } from 'react-native';
+import TextInputBox from '../components/TextInputBox';
 
 const AllMedicalCenters = ({navigation}) => {
 
     const database = getDatabase();
     const [medicalCenters, setMedicalCenters] = useState([]); // Array of medical centers
+    const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-
         // Get all medical centers
         const medicalCentersRef = ref(database, 'Users/')
         get(medicalCentersRef)
@@ -32,13 +33,21 @@ const AllMedicalCenters = ({navigation}) => {
         .catch((err)=>{
             console.error('Error retrieving user data:', err);
         })
-    }, [])
+    }, []);
+
+
+    // Filter the medical centers based on the search text
+    const filteredMedicalCenters = medicalCenters.filter((center) =>
+        center.Name.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     return (
         <ScrollView>
             <Text style={styles.title}>All Medical Centers</Text>
-            <Text style={styles.btntxt}>-Search bar here-</Text>
-            {medicalCenters.map((medicalCenter, index) => {
+
+            <TextInput placeholder="Search" onChangeText={(text) => setSearchText(text)} value={searchText}/>
+
+            {filteredMedicalCenters.map((medicalCenter, index) => {
                 return (
                     <View key={index} style={styles.card} >
                         <Text>{medicalCenter.PharmacyName}</Text>

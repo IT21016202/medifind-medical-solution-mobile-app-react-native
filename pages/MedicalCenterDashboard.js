@@ -4,11 +4,6 @@ import { clearUserSession } from '../SessionManager/SessionManager';
 
 const MedicalCenterDashboard = ({navigation}) => {
 
-    function logout() {
-        clearUserSession();
-        navigation.navigate('Home');
-    }
-
     return(
         <ScrollView style={styles.view}>
             <Text style={styles.topic}>What Do You Need ?</Text>
@@ -27,7 +22,6 @@ const MedicalCenterDashboard = ({navigation}) => {
 
             <Button title='Profile' onPress={() => navigation.navigate('MedicalCenterProfile')}></Button>
 
-            <Button title='Log Out' onPress={logout}></Button>
         </ScrollView>
     )
 }
