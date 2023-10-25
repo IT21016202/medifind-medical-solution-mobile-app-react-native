@@ -40,8 +40,8 @@ const UserRegisterPage = ({navigation}) =>{
                 Address: address,
                 City: city,
                 Type: 'user',
-                CreatedAt: new Date(),
-                UpdatedAt : new Date()
+                CreatedAt: JSON.stringify(new Date()),
+                UpdatedAt : JSON.stringify(new Date())
             };
         
             //Add user to realtimr DB

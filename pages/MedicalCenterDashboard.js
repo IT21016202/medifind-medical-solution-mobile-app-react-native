@@ -22,6 +22,11 @@ const MedicalCenterDashboard = ({navigation}) => {
                 <Text style={styles.text}>Appoinments</Text>
             </TouchableOpacity> 
 
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Scheduele')}>
+                <Image style={styles.image} source={require('../assets/images/icons/icon(7).png')}/>
+                <Text style={styles.text}>Schedules</Text>
+            </TouchableOpacity> 
+
             <Button title='Profile' onPress={() => navigation.navigate('MedicalCenterProfile')}></Button>
 
         </ScrollView>

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert, ImageBackground } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
+import { uploadBytes,uploadBytesResumable,getDownloadURL } from 'firebase/storage';
 import { saveUserSession } from "../SessionManager/SessionManager";
-
-import MyButton from "../components/MyButton";
-import TextInputBox from "../components/TextInputBox";
 
 const MedicalCenterRegisterPage = ({navigation}) =>{
     const [email, setEmail] = useState("");
@@ -25,20 +23,44 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
         const auth = getAuth();
         const database = getDatabase();
 
-        //Validate fields
-        if(name === "" || pharmacyName === "" || mobileNo === "" || address === "" || city === "" || facilities === "" || description === "" || password === "" || rePassword === ""){
-            alert('Please fill all the fields !');
+        //Validate null fields
+        if(email === "" || name === "" || pharmacyName === "" || mobileNo === "" || address === "" || city === "" || facilities === "" || description === "" || password === "" || rePassword === ""){
+            Alert.alert("Invalid Input", "Please fill all the fields !");
+            return;
+        }
+
+        // Regular expression for a basic email validation
+        const emailPattern = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+        if (!email.match(emailPattern)) {
+            // If the email doesn't match the pattern, show an alert or handle the error
+            Alert.alert('Invalid Email', 'Please enter a valid email address.');
+            return;
+        }
+
+        //regular expression for a basic mobile number validation
+        const mobilePattern = /^[0-9]{10}$/;
+
+        if (!mobileNo.match(mobilePattern)) {
+            // If the mobile number doesn't match the pattern, show an alert or handle the error
+            Alert.alert('Invalid Mobile Number', 'Please enter a valid mobile number.');
+            return;
+        }
+
+        // Validate mobile number
+        if (mobileNo.length !== 10){
+            Alert.alert("Invalid Mobile Number", "Mobile number should be 10 digits long !");
             return;
         }
 
         // Validate passwords
         if (password.length <= 5){
-            alert("Password should be at least 6 characters !");
+            Alert.alert("Invalid Password", "Password should be at least 6 characters long !");
             return;
         }
         
         if (password !== rePassword) {
-            alert('Passwords do not match !');
+            Alert.alert('Passwords do not match !');
             return;
         } 
 
@@ -86,35 +108,102 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
     }
 
     return(
+        <ImageBackground
+            source={require('../assets/images/back1.jpg')}
+            style={styles.backgroundImage}
+        >
         <ScrollView style={styles.view} scrollEnabled={true}>
             <Text style={styles.medifind}>MediFind</Text>
             <Text style={styles.registraion}>Medical Center Registration</Text>  
 
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Your Name" name="name" value={name} onChangeText={text => setName(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Pharmacy Name" name="pharmacyName" value={pharmacyName} onChangeText={text => setPharmacyName(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Mobile No" name="mobile" value={mobileNo} onChangeText={text => setMobileNo(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Address" name="address" value={address} onChangeText={text => setAddress(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter City" name="city" value={city} onChangeText={text => setCity(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Description" name="description" value={description} onChangeText={text => setDescription(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Facilities" name="facilities" value={facilities} onChangeText={text => setFacilities(text)}></TextInput>
-            <Text style={{paddingLeft: '8%'}}>Certificate</Text>
 
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Password" name="password" value={password} onChangeText={text => setPassword(text)}></TextInput>
-            <TextInput style={{paddingLeft: '8%'}} placeholder="Re-Enter Password" name="re-password" value={rePassword} onChangeText={text => setRePassword(text)}></TextInput>
 
-            <MyButton title="Register" onPress={register}></MyButton>
+            <Text style={styles.text}>Email</Text>
+            <TextInput style={styles.input} name="email" placeholder="example@email.com" value={email} onChangeText={text => setEmail(text)}></TextInput>
+
+            <Text style={styles.text}>Name</Text>
+            <TextInput style={styles.input} name="name" value={name} onChangeText={text => setName(text)}></TextInput>
+
+            <Text style={styles.text}>Pharmacy Name</Text>
+            <TextInput style={styles.input} name="pharmacyName" value={pharmacyName} onChangeText={text => setPharmacyName(text)}></TextInput>
+
+            <Text style={styles.text}>Mobile No</Text>
+            <TextInput style={styles.input} name="mobile" placeholder="07XXXXXXXX" value={mobileNo} onChangeText={text => setMobileNo(text)}></TextInput>
+
+            <Text style={styles.text}>Address</Text>
+            <TextInput style={styles.input} name="address" value={address} onChangeText={text => setAddress(text)}></TextInput>
+
+            <Text style={styles.text}>City</Text>
+            <TextInput style={styles.input} name="city" value={city} onChangeText={text => setCity(text)}></TextInput>
+
+            <Text style={styles.text}>Facilities</Text>
+            <TextInput style={styles.input} name="description" value={description} onChangeText={text => setDescription(text)}></TextInput>
+
+            <Text style={styles.text}>Description</Text>
+            <TextInput style={styles.input} name="facilities" value={facilities} onChangeText={text => setFacilities(text)}></TextInput>
+
+            <Text style={styles.text}>Password</Text>
+            <TextInput style={styles.input} name="password" value={password} secureTextEntry={true} onChangeText={text => setPassword(text)}></TextInput>
+
+            <Text style={styles.text}>Re-Enter Password</Text>
+            <TextInput style={styles.input} name="re-password" value={rePassword} secureTextEntry={true} onChangeText={text => setRePassword(text)}></TextInput>
+
+            <TouchableOpacity style={styles.btn}>
+                <Text style={styles.btntext} onPress={register}>Register</Text>
+            </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.registered}>Already Registered ? Log In </Text>
             </TouchableOpacity>
         </ScrollView>
+        </ImageBackground>
     );
 }
 
 
 const styles = StyleSheet.create({
     view:{ 
+
+    },
+
+    text:{
+        fontSize: 15,
+        marginLeft: '8%',
+        marginRight: '8%',
+        marginTop: 25,
+        fontWeight: 'bold',
+        backgroundColor: 'white',
+        padding: '2%',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        opacity: 0.8,
+    },
+
+    input:{
+        fontSize: 16,
+        padding: '2%',
+        borderBottomWidth: 1,
+        borderBottomColor: '#13BC9E',
+        marginLeft: '8%',
+        marginRight: '8%',
+        backgroundColor: 'white',
+        opacity: 0.8,
+    },
+
+    btn:{
+        backgroundColor: '#13BC9E',
+        marginLeft: '8%',
+        marginRight: '8%',
+        marginTop: 25,
+        borderRadius: 10,
+    },
+
+    btntext:{
+        fontSize: 18,
+        padding: '4%',
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
     },
 
     medifind:{
@@ -142,13 +231,13 @@ const styles = StyleSheet.create({
         marginTop: '10%',
         marginLeft: '8%',
         fontWeight: 'bold',
-        color: '#13BC9E'
+        color: 'black',
+        marginBottom: '10%',
     },
 
-    map: {
-        height: 400,
-        width: 400,
-    },
+    backgroundImage:{
+        resizeMode: 'cover'
+    }
 })
 
 export default MedicalCenterRegisterPage;

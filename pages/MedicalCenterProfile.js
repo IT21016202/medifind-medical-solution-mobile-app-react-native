@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
         textAlign: 'center',
         marginBottom: 20,
-        color: '#13BC9E',
+        color: 'black',
     },
 
     text: {
@@ -207,8 +207,6 @@ const styles = StyleSheet.create({
 
     input: {
         height: 40,
-        borderWidth: 1,
-        borderColor: '#7FE5D5',
         borderRadius: 6,
         padding: 10,
         width: '80%',
@@ -260,7 +258,7 @@ const styles = StyleSheet.create({
 
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover', // You can adjust the resizeMode as needed
+        resizeMode: 'cover', 
     },
 });
 
