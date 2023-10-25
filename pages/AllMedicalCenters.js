@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get } from 'firebase/database';
-import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Button, FlatList, TextInput, Linking } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Button, FlatList, TextInput, Linking, ImageBackground } from 'react-native';
 
 const AllMedicalCenters = ({navigation}) => {
 
@@ -54,7 +54,10 @@ const AllMedicalCenters = ({navigation}) => {
 
             {filteredMedicalCenters.map((medicalCenter, index) => {
                 return (
-                    <View key={index} style={styles.card} >
+                    <ImageBackground
+                        source={require('../assets/images/card.png')} 
+                        key={index} style={styles.card} 
+                    >
                         <Text style={styles.name}>{medicalCenter.PharmacyName}</Text>
                         <Text style={styles.address}>{medicalCenter.Address}</Text>
                         <Text style={styles.mobile}>{medicalCenter.Mobile}</Text>
@@ -81,7 +84,7 @@ const AllMedicalCenters = ({navigation}) => {
                             </Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </ImageBackground>
                 )
             })}
         </ScrollView>
@@ -124,6 +127,7 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.25,
         elevation: 5,
+        overflow: 'hidden',
     },
 
     name:{
@@ -199,7 +203,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center'
-    }
+    },
+
+    // backgroundImage: {
+    //     flex: 1,
+    //     resizeMode: 'fill', 
+    //     borderRadius: 10,
+    // },
 })
 
 export default AllMedicalCenters

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView, ImageBackground, } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView, ImageBackground, Image } from 'react-native';
 import { getUserSession } from '../SessionManager/SessionManager';
 import { getDatabase, ref, get, set, update, remove } from 'firebase/database';
 import { getAuth, deleteUser} from 'firebase/auth';
@@ -18,7 +18,7 @@ const MedicalCenterProfile = ({navigation}) => {
     const [address, setAddress] = useState('');
     const [facilities, setFacilities] = useState('');
     const [description, setDescription] = useState('');
-    //const [image, setImage] = useState('');
+    const [image, setImage] = useState('');
     const [city, setCity] = useState('');
 
     const [updated, setUpdated] = useState(false);
@@ -30,7 +30,7 @@ const MedicalCenterProfile = ({navigation}) => {
             // Create a reference to the specific document
             const userRef = ref(database, 'Users/' + userSession.uid);
     
-            // Retrieve data from the specific documen
+            // Retrieve data from the specific document
             get(userRef)
             .then((snapshot)=>{
                 if(snapshot.exists()){
@@ -46,7 +46,7 @@ const MedicalCenterProfile = ({navigation}) => {
                     setCity(data.City);
                     setFacilities(data.facilities);
                     setDescription(data.Description);
-                    //setImage(data.Image);
+                    setImage(data.Image);
                 }
                 else{
                     console.log('User Data Not Found !');
@@ -76,6 +76,7 @@ const MedicalCenterProfile = ({navigation}) => {
             City: city,
             facilities: facilities,
             Description: description,
+            Image: image
         };
 
         console.log(data);
@@ -123,7 +124,7 @@ const MedicalCenterProfile = ({navigation}) => {
         }
     };
     
-    
+
     function logout() {
         clearUserSession();
         navigation.navigate('Home');
@@ -139,7 +140,8 @@ const MedicalCenterProfile = ({navigation}) => {
             <ScrollView style={styles.container}>
                 <Text style={styles.title}>Medical Center Profile</Text>
 
-                {/* <Text style={styles.text}>Image</Text> */}
+                <Text style={styles.text}>Image</Text>
+                <Image source={{uri: image}} style={{width: 100, height: 100, marginLeft: 40, marginBottom: 10,}} />
 
                 <Text style={styles.text}>User's Name : </Text>
                 <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={text => setName(text)}/>

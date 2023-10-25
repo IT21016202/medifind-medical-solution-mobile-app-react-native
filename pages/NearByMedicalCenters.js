@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get } from 'firebase/database';
-import { ScrollView, Text, View, StyleSheet, Touchable, TouchableOpacity, Button, Linking } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Touchable, TouchableOpacity, Button, Linking, ImageBackground } from 'react-native';
 import { getUserSession } from '../SessionManager/SessionManager';
 
 const NearByMedicalCenters = ({navigation}) => {
@@ -69,7 +69,10 @@ const NearByMedicalCenters = ({navigation}) => {
         {medicalCenters ? (
             // Data is available, map over the medicalCenters and render them
             medicalCenters.map((medicalCenter, index) => (
-                <View key={index} style={styles.card}>
+                <ImageBackground
+                    source={require('../assets/images/card.png')} 
+                    key={index} style={styles.card} 
+                >
                 <Text style={styles.name}>{medicalCenter.PharmacyName}</Text>
                 <Text style={styles.address}>{medicalCenter.Address}</Text>
                 <Text style={styles.mobile}>{medicalCenter.Mobile}</Text>
@@ -95,7 +98,7 @@ const NearByMedicalCenters = ({navigation}) => {
                     </Text>
                     </TouchableOpacity>
                 </View>
-                </View>
+                </ImageBackground>
             ))
             ) : (
             // Data is not available, display a loading message
@@ -149,6 +152,7 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.25,
         elevation: 5,
+        overflow: 'hidden',
     },
 
     name:{
@@ -217,7 +221,6 @@ const styles = StyleSheet.create({
 
     loading:{
         fontSize: 18,
-        fontWeight: 'bold',
         marginTop: 20,
         textAlign: 'center',
         color: 'black',

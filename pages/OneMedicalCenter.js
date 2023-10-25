@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get, push, set } from 'firebase/database';
-import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Image, TextInput, Alert, ImageBackground, Linking } from 'react-native';
 import { getUserSession } from '../SessionManager/SessionManager';
 import moment from 'moment';
 
@@ -66,7 +66,6 @@ const OneMedicalCenter = ({route, navigation}) => {
   },[isChaged]);
 
   const submitReview = () => {
-
     if(review === ""){
       Alert.alert("Invalid Input", "Please fill all the review field !");
       return;
@@ -92,14 +91,25 @@ const OneMedicalCenter = ({route, navigation}) => {
     .catch((error) => {
       console.error('Error adding review data to Realtime Database:', error);
     });
-  }
+  };
 
+  const handlePhoneCall = (phoneNumber) => {
+    const url = `tel:${phoneNumber}`;
+    Linking.openURL(url).catch((err) =>
+      console.error('An error occurred when trying to make the call:', err)
+    );
+  };
 
   return (
     <ScrollView style={styles.view}>
         <Text style={styles.title}>{medicalCenter.PharmacyName}</Text>
-        <Image source={require('../assets/images/medi-center.jpg') } style={styles.img} />
 
+        {medicalCenter.Image != '' ? (
+          <Image source={{uri: medicalCenter.Image}} style={styles.img} />
+        ) : (
+          <Text>No Image Found...</Text>
+        )}
+        
         <Text style={styles.detailsTitle}>Description</Text>
         <Text style={styles.details}>{medicalCenter.Description}</Text>
 
@@ -110,7 +120,7 @@ const OneMedicalCenter = ({route, navigation}) => {
         <Text style={styles.details}>{medicalCenter.Address}</Text>
 
         <Text style={styles.detailsTitle}>Mobile</Text>
-        <Text style={styles.details}>{medicalCenter.Mobile}</Text>
+        <Text style={styles.details} onPress={() => handlePhoneCall(medicalCenter.Mobile)}>{medicalCenter.Mobile}</Text>
 
         <View style={styles.inlineContainer}>
             <TouchableOpacity>
@@ -153,10 +163,8 @@ const OneMedicalCenter = ({route, navigation}) => {
         }
         )}
 
-
-
-
     </ScrollView>
+   
   )
 }
 
@@ -234,7 +242,7 @@ const styles = StyleSheet.create({
   },
 
   horizontalLine: {
-    borderBottomColor: 'gray',  // Color of the line
+    borderBottomColor: 'lightgray',  // Color of the line
     borderBottomWidth: 1,        // Thickness of the line
   },
 
@@ -274,7 +282,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    width: 150,
+    width: 140,
+    marginBottom: 20,
   },
 
   userimg: {

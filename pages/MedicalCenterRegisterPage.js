@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert, ImageBackground, Image, View, Button } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
-import { uploadBytes,uploadBytesResumable,getDownloadURL } from 'firebase/storage';
+import { uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { saveUserSession } from "../SessionManager/SessionManager";
+import { launchImageLibrary } from 'react-native-image-picker';
+import { storage, storageRef } from '../Firebase/FirebaseConfing';
 
 const MedicalCenterRegisterPage = ({navigation}) =>{
     const [email, setEmail] = useState("");
@@ -13,11 +15,14 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [facilities, setFacilities] = useState("");
-    const [certificate, setCertificate] = useState(""); // Image URL
-    const [image, setImage] = useState(""); // Image URL
+    const [certificate, setCertificate] = useState(""); 
     const [description, setDescription] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
+
+    const [image, setImage] = useState(""); 
+    const [imageUrl, setImageUrl] = useState("");
+    const [message, setMessage] = useState('');
 
     function register(){
         const auth = getAuth();
@@ -77,7 +82,7 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
                 facilities: facilities,
                 Description: description,
                 Certificate: certificate,
-                Image: image,
+                Image: imageUrl,
                 Type: 'medical',
                 CreatedAt: JSON.stringify(new Date()),
                 UpdatedAt : JSON.stringify(new Date())
@@ -104,8 +109,59 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
             const errorMessage = error.message;
             console.error('Registration error:', errorCode, errorMessage);
         });
-       
     }
+
+    const imagePicker = async () => {
+        const result = await launchImageLibrary({
+            mediaType: 'photo',
+            quality: 1,
+        })
+        .then(res => {
+            if (!res.didCancel) {
+                setImage(res.assets[0].uri);
+                handleUpload();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    };
+
+    const handleUpload = async () => {
+        try {
+          const response = await fetch(image);
+    
+          if (!response.ok) {
+            setMessage('Something went wrong');
+            throw new Error('Network request failed');
+          } else {
+            const blob = await response.blob();
+            const segments = image.split('/');
+            const fileName = segments[segments.length - 1];
+            const reference = storageRef(storage, 'images/' + fileName);
+            const uploadTask = uploadBytesResumable(reference, blob);
+    
+            uploadTask.on(
+              'state_changed',
+              snapshot => {
+                const progress =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              },
+              error => {
+                console.error('Error during upload:', error);
+              },
+              () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+                  setImageUrl(downloadURL);
+                  setMessage('Upload completed');
+                });
+              },
+            );
+          }
+        } catch (err) {
+          console.log(err);
+        }
+    };
 
     return(
         <ImageBackground
@@ -139,6 +195,11 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
 
             <Text style={styles.text}>Description</Text>
             <TextInput style={styles.input} name="facilities" value={facilities} onChangeText={text => setFacilities(text)}></TextInput>
+
+            <Text style={styles.text}>Profile Image</Text>
+            <TouchableOpacity style={styles.input} onPress={imagePicker}>
+                <Text>Touch here to select</Text>
+            </TouchableOpacity>
 
             <Text style={styles.text}>Password</Text>
             <TextInput style={styles.input} name="password" value={password} secureTextEntry={true} onChangeText={text => setPassword(text)}></TextInput>
