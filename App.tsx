@@ -11,7 +11,10 @@ import RegistrationSelection from "./pages/RegistrationSelection";
 import UserDashboard from "./pages/UserDashboard";
 import UserRegisterPage from "./pages/UserRegisterPage";
 import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
-
+import ProfilePage from "./pages/ProfilePage";
+import ContactHistoryPage from "./pages/ContactHistory";
+import DoctorHistoryPage from "./pages/DoctorHistory";
+import PrescriptionDetails from "./pages/PrescriptionDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +29,10 @@ const App = () =>{
         <Stack.Screen name="RegisterSelection" component={RegistrationSelection} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterRegistration" component={MedicalCenterRegisterPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="UserRegistration" component={UserRegisterPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="ProfilePage" component={ProfilePage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="ContactHistoryPage" component={ContactHistoryPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="DoctorHistoryPage" component={DoctorHistoryPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="PrescriptionDetails" component={PrescriptionDetails} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: '', headerRight: () => (<View><TouchableOpacity><Image source={require('./assets/images/menu-white.png')} style={styles.menuLogo}></Image></TouchableOpacity><TouchableOpacity><Image source={require('./assets/images/profile.png')} style={styles.profileLogo}></Image></TouchableOpacity><TouchableOpacity><Image source={require('./assets/images/notification-white.png')} style={styles.notificationLogo}></Image></TouchableOpacity></View>)}}/>
       </Stack.Navigator>
     </NavigationContainer>
