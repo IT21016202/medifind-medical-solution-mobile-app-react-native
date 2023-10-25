@@ -141,7 +141,7 @@ const MedicalCenterProfile = ({navigation}) => {
             <ScrollView style={styles.container}>
                 <Text style={styles.title}>Medical Center Profile</Text>
 
-                <Text style={styles.text}>Image</Text>
+                {/* <Text style={styles.text}>Image</Text> */}
 
                 <Text style={styles.text}>User's Name : </Text>
                 <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={text => setName(text)}/>

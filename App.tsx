@@ -20,6 +20,7 @@ import AllMedicalCenters from "./pages/AllMedicalCenters";
 import OneMedicalCenter from "./pages/OneMedicalCenter";
 import Scheduele from "./pages/Scheduele";
 import SplashScreen from "./pages/SplashScreen";
+import NearByCentersMapView from "./pages/NearByCentersMapView";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const App = () =>{
         <Stack.Screen name="OneMedicalCenter" component={OneMedicalCenter} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterProfile" component={MedicalCenterProfile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Scheduele" component={Scheduele} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="NearByCentersMapView" component={NearByCentersMapView} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
        
       </Stack.Navigator>
     </NavigationContainer>

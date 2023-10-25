@@ -3,6 +3,7 @@ import {ScrollView, Text, StyleSheet, TextInput, TouchableOpacity} from "react-n
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { saveUserSession } from "../SessionManager/SessionManager";
+import {Picker} from '@react-native-picker/picker';
 
 import MyButton from "../components/MyButton";
 
@@ -11,6 +12,10 @@ const UserRegisterPage = ({navigation}) =>{
     const [name, setName] = useState("");
     const [mobileNo, setMobileNo] = useState("");
     const [address, setAddress] = useState("");
+    const [age, setAge] = useState(""); 
+    const [gender, setGender] = useState("");
+    const [weight, setWeight] = useState("");
+    const [height, setHeight] = useState("");
     const [city, setCity] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -38,6 +43,10 @@ const UserRegisterPage = ({navigation}) =>{
                 Name: name,
                 Mobile: mobileNo,
                 Address: address,
+                Age: age,
+                Gender: gender,
+                Weight: weight,
+                Height: height,
                 City: city,
                 Type: 'user',
                 CreatedAt: JSON.stringify(new Date()),
@@ -74,6 +83,19 @@ const UserRegisterPage = ({navigation}) =>{
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Your Name" name="name" value={name} onChangeText={text => setName(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Mobile No" name="mobile" value={mobileNo} onChangeText={text => setMobileNo(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Age" name="age" value={age} onChangeText={text => setAge(text)}></TextInput>
+
+            <Picker
+                selectedValue={gender}
+                onValueChange={(text) => setGender(text)}
+            >
+                <Picker.Item label="Select Gender" value="" enabled={false}/>
+                <Picker.Item label="Male" value="male" />
+                <Picker.Item label="Female" value="female" />
+            </Picker>
+
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Weight in kg" name="weight" value={weight} onChangeText={text => setWeight(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Height in cm" name="height" value={height} onChangeText={text => setHeight(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Address" name="address" value={address} onChangeText={text => setAddress(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter City" name="city" value={city} onChangeText={text => setCity(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Password" name="password" value={password} onChangeText={text => setPassword(text)}></TextInput>

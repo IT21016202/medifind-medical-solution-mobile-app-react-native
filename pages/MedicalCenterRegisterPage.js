@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert, ImageBackground } from "react-native";
+import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert, ImageBackground, Image, View, Button } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { uploadBytes,uploadBytesResumable,getDownloadURL } from 'firebase/storage';
@@ -79,8 +79,8 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
                 Certificate: certificate,
                 Image: image,
                 Type: 'medical',
-                CreatedAt: new Date(),
-                UpdatedAt : new Date()
+                CreatedAt: JSON.stringify(new Date()),
+                UpdatedAt : JSON.stringify(new Date())
             };
             console.log(userData)
         
@@ -115,8 +115,6 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
         <ScrollView style={styles.view} scrollEnabled={true}>
             <Text style={styles.medifind}>MediFind</Text>
             <Text style={styles.registraion}>Medical Center Registration</Text>  
-
-
 
             <Text style={styles.text}>Email</Text>
             <TextInput style={styles.input} name="email" placeholder="example@email.com" value={email} onChangeText={text => setEmail(text)}></TextInput>

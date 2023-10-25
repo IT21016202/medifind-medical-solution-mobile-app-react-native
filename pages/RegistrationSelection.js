@@ -13,14 +13,13 @@ const RegistrationSelection = ({navigation}) => {
 
             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('MedicalCenterRegistration')}>
                 <Text style={styles.text}>Medical Center</Text>
-                
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btn}>
                 <Text style={styles.text}>Doctor</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('UserRegistration')}>
                 <Text style={styles.text}>Patient</Text>
             </TouchableOpacity>
 

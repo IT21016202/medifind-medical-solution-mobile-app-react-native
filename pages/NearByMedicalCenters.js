@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { getDatabase, ref, get } from 'firebase/database';
-import { ScrollView, Text, View, StyleSheet, Touchable, TouchableOpacity, Button } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Touchable, TouchableOpacity, Button, Linking } from 'react-native';
 import { getUserSession } from '../SessionManager/SessionManager';
 
 const NearByMedicalCenters = ({navigation}) => {
 
     const database = getDatabase();
-    const [medicalCenters, setMedicalCenters] = useState([]); // Array of medical centers
+    const [medicalCenters, setMedicalCenters] = useState(null); // Array of medical centers
     let userData = {};
 
     useEffect(() => {
@@ -51,22 +51,57 @@ const NearByMedicalCenters = ({navigation}) => {
     //     navigation.navigate('OneMedicalCenter', {id: id})
     // }
 
+    const handlePhoneCall = (phoneNumber) => {
+        const url = `tel:${phoneNumber}`;
+        Linking.openURL(url).catch((err) =>
+          console.error('An error occurred when trying to make the call:', err)
+        );
+      };
+
   return (
     <ScrollView>
         <Text style={styles.title}>Nearby Medical Centers To You</Text>
-        {medicalCenters.map((medicalCenter, index) => {
-            return (
+
+        {/* <TouchableOpacity style={styles.showMapBtn} onPress={() => navigation.navigate("NearByCentersMapView")}>
+            <Text style={styles.showMaptxt} >Show on Map</Text>
+        </TouchableOpacity> */}
+
+        {medicalCenters ? (
+            // Data is available, map over the medicalCenters and render them
+            medicalCenters.map((medicalCenter, index) => (
                 <View key={index} style={styles.card}>
-                    <Text>{medicalCenter.PharmacyName}</Text>
-                    <Text>{'medicalCenter.Address'}</Text>
-                    <Text>{medicalCenter.Mobile}</Text>
-                    <Text>{'medicalCenter.Email'}</Text>
-                    <Text>{'Facilities'}</Text>
-                    <Text>City : {medicalCenter.City}</Text>
-                    <Button title="View" onPress={()=>navigation.navigate('OneMedicalCenter', {id: medicalCenter.ID})}/>
+                <Text style={styles.name}>{medicalCenter.PharmacyName}</Text>
+                <Text style={styles.address}>{medicalCenter.Address}</Text>
+                <Text style={styles.mobile}>{medicalCenter.Mobile}</Text>
+
+                <View style={styles.inlineContainer}>
+                    <TouchableOpacity>
+                    <Text
+                        style={styles.call}
+                        onPress={() => handlePhoneCall(medicalCenter.Mobile)}
+                    >
+                        Make a Call
+                    </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                    <Text
+                        style={styles.view}
+                        onPress={() =>
+                        navigation.navigate('OneMedicalCenter', { id: medicalCenter.ID })
+                        }
+                    >
+                        View Details
+                    </Text>
+                    </TouchableOpacity>
                 </View>
-            )
-        })}
+                </View>
+            ))
+            ) : (
+            // Data is not available, display a loading message
+            <Text style={styles.loading}>Loading... Please Wait..</Text>
+            )}
+
         <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('AllMedicalCenters')}>
             <Text style={styles.btntxt}>Show All Centers</Text>
         </TouchableOpacity>
@@ -84,8 +119,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 
-    card:{
-        backgroundColor: '#fff',
+    showMapBtn:{
+        backgroundColor: '#13BC9E',
         marginHorizontal: 15,
         marginVertical: 10,
         padding: 12,
@@ -94,6 +129,70 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.25,
         elevation: 5,
+        alignItems: 'center',
+    },
+
+    showMaptxt:{
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    card:{
+        backgroundColor: '#fff',
+        marginHorizontal: 15,
+        marginVertical: 10,
+        padding: 15,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.25,
+        elevation: 5,
+    },
+
+    name:{
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+        paddingBottom: 5,
+    },
+
+    address:{
+        fontSize: 16,
+        color: 'black',
+    },
+
+    mobile:{
+        fontSize: 16,
+        color: 'black',
+    },
+
+    inlineContainer: {
+        flexDirection: 'row', // Arrange items in a row
+        alignItems: 'center',  // Vertically align items in the center
+        justifyContent: 'space-between', // Create space between the two elements
+    },
+
+    call:{
+        fontSize: 16,
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'left',
+        marginTop: 10,
+        backgroundColor: '#13BC9E',
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 10,
+    },
+
+    view:{
+        fontSize: 16,
+        color: '#13BC9E',
+        fontWeight: 'bold',
+        textAlign: 'right',
+        marginTop: 10,
     },
 
     btn:{
@@ -113,6 +212,15 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+
+    loading:{
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 20,
+        textAlign: 'center',
+        color: 'black',
+        marginBottom: 20,
     }
 });
 
