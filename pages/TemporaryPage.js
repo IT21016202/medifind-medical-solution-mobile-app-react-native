@@ -19,7 +19,7 @@ const TemporaryPage = ({navigation}) => {
         onPress={() => navigation.navigate('BloodRequestPage')}
       />
       <SubmitButton
-        text="Blood Searcher details"
+        text="User details"
         onPress={() => navigation.navigate('BloodSearcherDetails')}
       />
       <SubmitButton
@@ -28,7 +28,7 @@ const TemporaryPage = ({navigation}) => {
       />
 
       <SubmitButton
-        text="Accepted Requests"
+        text="Accepted Requests(user view)"
         onPress={() => navigation.navigate('AcceptedRequestsPage')}
       />
       {/* <SubmitButton
@@ -43,6 +43,11 @@ const TemporaryPage = ({navigation}) => {
       <SubmitButton
         text="DonorMapView"
         onPress={() => navigation.navigate('DonorMapView')}
+      />
+
+      <SubmitButton
+        text="Accepted Requests(donor view)"
+        onPress={() => navigation.navigate('DonorAcceptedRequests')}
       />
     </ScrollView>
   );
