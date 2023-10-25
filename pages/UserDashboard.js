@@ -69,7 +69,7 @@ const UserDashboard = ({navigation}) => {
           style={styles.image}
           source={require('../assets/images/icons/icon(3).png')}
         />
-        <Text style={styles.text}>Request Blood</Text>
+        <Text style={styles.text}>Blood Donation</Text>
       </TouchableOpacity>
 
             <Button title='Log Out' onPress={logout}></Button>

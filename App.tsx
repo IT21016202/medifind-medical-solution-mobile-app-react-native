@@ -31,6 +31,7 @@ import Chart from "./pages/Chart";
 import NearByMedicalCenters from "./pages/NearByMedicalCenters";
 import AllMedicalCenters from "./pages/AllMedicalCenters";
 import OneMedicalCenter from "./pages/OneMedicalCenter";
+import Profile from "./pages/Profile";
 
 const Stack = createNativeStackNavigator();
 
