@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 16,
         textAlign: 'center',
-        fontColor: '#000',
+        color: '#000'
     },
 
     searchbox: {
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', // Arrange items in a row
         alignItems: 'center',  // Vertically align items in the center
         justifyContent: 'space-between', // Create space between the two elements
+
     },
 
     call:{
@@ -166,6 +167,10 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.25,
+        elevation: 5,
     },
 
     view:{
@@ -174,6 +179,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'right',
         marginTop: 10,
+        shadowColor: '#000',
     },
 
     btn: {

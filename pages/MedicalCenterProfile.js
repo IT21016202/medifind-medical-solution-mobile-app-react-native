@@ -123,9 +123,7 @@ const MedicalCenterProfile = ({navigation}) => {
         }
     };
     
-
-
-
+    
     function logout() {
         clearUserSession();
         navigation.navigate('Home');
@@ -134,7 +132,7 @@ const MedicalCenterProfile = ({navigation}) => {
   
     return (
         <ImageBackground
-            source={require('../assets/images/green_background.jpg')}
+            source={require('../assets/images/back1.jpg')}
             style={styles.backgroundImage}
         >
 
@@ -213,6 +211,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginLeft: 40,
         backgroundColor: 'white',
+        opacity: 0.8,
     },
 
     buttonContainer:{

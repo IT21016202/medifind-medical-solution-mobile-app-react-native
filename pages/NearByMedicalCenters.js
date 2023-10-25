@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#13BC9E',
         marginBottom: 20,
+        color: 'black',
     },
 
     showMapBtn:{
