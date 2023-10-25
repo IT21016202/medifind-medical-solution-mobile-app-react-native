@@ -10,6 +10,8 @@ const UserRegisterPage = ({navigation}) =>{
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [mobileNo, setMobileNo] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
 
@@ -32,8 +34,11 @@ const UserRegisterPage = ({navigation}) =>{
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const userData = {
+                ID: userCredential.user.uid,
                 Name: name,
                 Mobile: mobileNo,
+                Address: address,
+                City: city,
                 Type: 'user',
                 CreatedAt: new Date(),
                 UpdatedAt : new Date()
@@ -69,6 +74,8 @@ const UserRegisterPage = ({navigation}) =>{
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Your Name" name="name" value={name} onChangeText={text => setName(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Mobile No" name="mobile" value={mobileNo} onChangeText={text => setMobileNo(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Address" name="address" value={address} onChangeText={text => setAddress(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter City" name="city" value={city} onChangeText={text => setCity(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Password" name="password" value={password} onChangeText={text => setPassword(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Re-Enter Password" name="re-password" value={rePassword} onChangeText={text => setRePassword(text)}></TextInput>
 

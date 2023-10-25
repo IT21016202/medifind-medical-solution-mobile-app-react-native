@@ -49,13 +49,10 @@ const UserDashboard = ({navigation}) => {
         <Text style={styles.text}>Appoinments</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
-        <Image
-          style={styles.image}
-          source={require('../assets/images/icons/icon(4).png')}
-        />
-        <Text style={styles.text}>Medical Center</Text>
-      </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NearByMedicalCenters')}>
+                    <Image style={styles.image} source={require('../assets/images/icons/icon(4).png')}/>
+                    <Text style={styles.text}>Medical Centers</Text>
+            </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
         <Image
@@ -75,10 +72,13 @@ const UserDashboard = ({navigation}) => {
         <Text style={styles.text}>Request Blood</Text>
       </TouchableOpacity>
 
-      <Button title="Log Out" onPress={logout}></Button>
-    </ScrollView>
-  );
-};
+            <Button title='Log Out' onPress={logout}></Button>
+            <Text></Text>
+            <Text></Text>
+        </ScrollView>
+    )
+}
+
 
 const styles = StyleSheet.create({
   view: {

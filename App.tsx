@@ -12,7 +12,7 @@ import RegistrationSelection from "./pages/RegistrationSelection";
 import UserDashboard from "./pages/UserDashboard";
 import UserRegisterPage from "./pages/UserRegisterPage";
 import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
-import Profile from "./pages/Profile";
+import MedicalCenterProfile from "./pages/MedicalCenterProfile";
 import Notification from "./pages/Notification";
 import AdminDashboard from "./pages/AdminDashboard";
 
@@ -28,8 +28,9 @@ import EditRequest from "./pages/EditRequestScreen";
 import DonorMapView from "./pages/DonorMapView";
 import DonorAcceptedRequests from "./pages/DonorAcceptedRequests";
 import Chart from "./pages/Chart";
-
-
+import NearByMedicalCenters from "./pages/NearByMedicalCenters";
+import AllMedicalCenters from "./pages/AllMedicalCenters";
+import OneMedicalCenter from "./pages/OneMedicalCenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,8 +39,6 @@ const App = () =>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
-      {/* <Stack.Screen name="Profile" component={Profile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/> */}
-
         <Stack.Screen name="Home" component={HomePage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff' , headerTitle: ''}}/>
         <Stack.Screen name="Login" component={LoginPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
@@ -61,22 +60,14 @@ const App = () =>{
         <Stack.Screen name="EditRequest" component={EditRequest} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="DonorMapView" component={DonorMapView} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="DonorAcceptedRequests" component={DonorAcceptedRequests } options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="NearByMedicalCenters" component={NearByMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="AllMedicalCenters" component={AllMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="OneMedicalCenter" component={OneMedicalCenter} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="MedicalCenterProfile" component={MedicalCenterProfile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 
-}
-
-const gotoProfile = () => {
-
-}
-
-const gotoMenu = () => {
-  
-}
-
-const gotoNotification = () => {
-  
 }
 
 const styles = StyleSheet.create({

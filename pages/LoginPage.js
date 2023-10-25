@@ -52,7 +52,8 @@ const LoginPage = ({ navigation }) =>{
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.error('Sign-in error:', errorCode, errorMessage);
+            //console.error('Sign-in error:', errorCode, errorMessage);
+            alert(errorCode);
         });
     }
 

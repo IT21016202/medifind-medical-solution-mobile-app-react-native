@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { saveUserSession } from "../SessionManager/SessionManager";
 
 import MyButton from "../components/MyButton";
+import TextInputBox from "../components/TextInputBox";
 
 const MedicalCenterRegisterPage = ({navigation}) =>{
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [pharmacyName, setPharmacyName] = useState("");
     const [mobileNo, setMobileNo] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [facilities, setFacilities] = useState("");
+    const [certificate, setCertificate] = useState(""); // Image URL
+    const [image, setImage] = useState(""); // Image URL
+    const [description, setDescription] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
 
     function register(){
         const auth = getAuth();
         const database = getDatabase();
+
+        //Validate fields
+        if(name === "" || pharmacyName === "" || mobileNo === "" || address === "" || city === "" || facilities === "" || description === "" || password === "" || rePassword === ""){
+            alert('Please fill all the fields !');
+            return;
+        }
 
         // Validate passwords
         if (password.length <= 5){
@@ -27,19 +40,27 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
         if (password !== rePassword) {
             alert('Passwords do not match !');
             return;
-        }
+        } 
 
         // Create a new user to authentication
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const userData = {
+                ID: userCredential.user.uid,
                 Name: name,
                 Mobile: mobileNo,
                 PharmacyName: pharmacyName, 
+                Address: address,
+                City: city,
+                facilities: facilities,
+                Description: description,
+                Certificate: certificate,
+                Image: image,
                 Type: 'medical',
                 CreatedAt: new Date(),
                 UpdatedAt : new Date()
             };
+            console.log(userData)
         
             //Add user to realtimr DB
             const userRef = ref(database, 'Users/' + userCredential.user.uid);
@@ -73,8 +94,12 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Your Name" name="name" value={name} onChangeText={text => setName(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Pharmacy Name" name="pharmacyName" value={pharmacyName} onChangeText={text => setPharmacyName(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Mobile No" name="mobile" value={mobileNo} onChangeText={text => setMobileNo(text)}></TextInput>
-            <Text style={{paddingLeft: '8%'}}>File Upload Box</Text>
-            <Text style={{paddingLeft: '8%'}}>Location Picker</Text>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Address" name="address" value={address} onChangeText={text => setAddress(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter City" name="city" value={city} onChangeText={text => setCity(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Description" name="description" value={description} onChangeText={text => setDescription(text)}></TextInput>
+            <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Facilities" name="facilities" value={facilities} onChangeText={text => setFacilities(text)}></TextInput>
+            <Text style={{paddingLeft: '8%'}}>Certificate</Text>
+
             <TextInput style={{paddingLeft: '8%'}} placeholder="Enter Password" name="password" value={password} onChangeText={text => setPassword(text)}></TextInput>
             <TextInput style={{paddingLeft: '8%'}} placeholder="Re-Enter Password" name="re-password" value={rePassword} onChangeText={text => setRePassword(text)}></TextInput>
 
@@ -118,7 +143,12 @@ const styles = StyleSheet.create({
         marginLeft: '8%',
         fontWeight: 'bold',
         color: '#13BC9E'
-    }
+    },
+
+    map: {
+        height: 400,
+        width: 400,
+    },
 })
 
 export default MedicalCenterRegisterPage;
