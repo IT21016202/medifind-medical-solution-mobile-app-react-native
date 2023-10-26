@@ -32,6 +32,7 @@ import NearByMedicalCenters from "./pages/NearByMedicalCenters";
 import AllMedicalCenters from "./pages/AllMedicalCenters";
 import OneMedicalCenter from "./pages/OneMedicalCenter";
 import Profile from "./pages/Profile";
+import BloodDonationDashboard from "./pages/BloodDonationDashboard";
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,7 @@ const App = () =>{
         <Stack.Screen name="AllMedicalCenters" component={AllMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="OneMedicalCenter" component={OneMedicalCenter} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterProfile" component={MedicalCenterProfile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="BloodDonationDashboard" component={BloodDonationDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -66,6 +66,8 @@ const Profile = ({navigation}) => {
           <Text style={styles.infoLabel}>Mobile:</Text>
           <Text style={styles.infoValue}>{userData.Mobile}</Text>
         </View>
+        {userType === 'donor' && (
+          <View>
         <View style={styles.infoContainer}>
           <Text style={styles.infoLabel}>Location:</Text>
           <Text style={styles.infoValue}>{userData.Location}</Text>
@@ -74,6 +76,8 @@ const Profile = ({navigation}) => {
           <Text style={styles.infoLabel}>Blood Type:</Text>
           <Text style={styles.infoValue}>{userData.BloodType}</Text>
         </View>
+        </View>
+        )}
       </View>
       {userType === 'user' && (
         <View style={styles.buttonContain}>

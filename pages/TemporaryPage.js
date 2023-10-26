@@ -49,6 +49,11 @@ const TemporaryPage = ({navigation}) => {
         text="Accepted Requests(donor view)"
         onPress={() => navigation.navigate('DonorAcceptedRequests')}
       />
+
+      <SubmitButton
+        text="Blood Doantion Dashboard"
+        onPress={() => navigation.navigate('BloodDonationDashboard')}
+      />
     </ScrollView>
   );
 };
