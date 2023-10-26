@@ -104,7 +104,7 @@ const OneMedicalCenter = ({route, navigation}) => {
     <ScrollView style={styles.view}>
         <Text style={styles.title}>{medicalCenter.PharmacyName}</Text>
 
-        {medicalCenter.Image != '' ? (
+        {medicalCenter.Image != null ? (
           <Image source={{uri: medicalCenter.Image}} style={styles.img} />
         ) : (
           <Text>No Image Found...</Text>

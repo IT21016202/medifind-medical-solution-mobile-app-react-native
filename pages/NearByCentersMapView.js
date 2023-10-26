@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {getDatabase, ref, onValue} from 'firebase/database';
 
-const NearByCentersMapView = () => {
+const NearByCentersMapView = ({navigation}) => {
 
     const database = getDatabase();
     const [medicalCenters, setMedicalCenters] = useState([]);
@@ -37,8 +37,8 @@ const NearByCentersMapView = () => {
                   latitude: medicalCenter.Latitude,
                   longitude: medicalCenter.Longitude,
                 }}
-                title={medicalCenter.Name}
-                description={'Blood Type: ' +medicalCenter.BloodType}
+                title={medicalCenter.PharmacyName}
+                description={'Contact: ' +medicalCenter.Mobile}
               />
                
             ))}   

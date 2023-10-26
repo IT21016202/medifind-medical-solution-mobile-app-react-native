@@ -18,10 +18,8 @@ const MedicalCenterProfile = ({navigation}) => {
     const [address, setAddress] = useState('');
     const [facilities, setFacilities] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const [city, setCity] = useState('');
-
-    const [updated, setUpdated] = useState(false);
 
     useEffect(() => {
         const checkUserSession = async () => {
@@ -37,6 +35,7 @@ const MedicalCenterProfile = ({navigation}) => {
                     // Data exists in the document
                     const data = snapshot.val();
                     setUserData(data);
+                    console.log(data)
 
                     setId(data.ID);
                     setName(data.Name);
@@ -58,8 +57,7 @@ const MedicalCenterProfile = ({navigation}) => {
             
         };
         checkUserSession();
-        setUpdated(false);
-    }, [updated]);
+    },[]);
    
 
     const updateProfile = () => {
@@ -86,7 +84,6 @@ const MedicalCenterProfile = ({navigation}) => {
         .then(()=>{
             console.log('User Profile Updated !');
             alert('Profile Updated !');
-            setUpdated(true);
         })
         .catch((err)=>{
             console.error('Error updating user profile:', err);
@@ -141,7 +138,10 @@ const MedicalCenterProfile = ({navigation}) => {
                 <Text style={styles.title}>Medical Center Profile</Text>
 
                 <Text style={styles.text}>Image</Text>
-                <Image source={{uri: image}} style={{width: 100, height: 100, marginLeft: 40, marginBottom: 10,}} />
+                {image != null ? (
+                    <Image source={{uri: image}} style={styles.img}/>
+                ) : (<Text>No Image Found...</Text>)}
+                
 
                 <Text style={styles.text}>User's Name : </Text>
                 <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={text => setName(text)}/>
@@ -260,6 +260,13 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover', 
+    },
+
+    img: {
+        width: 310,
+        height: 150,
+        marginLeft: 40,
+        marginBottom: 15,
     },
 });
 

@@ -62,9 +62,9 @@ const NearByMedicalCenters = ({navigation}) => {
     <ScrollView>
         <Text style={styles.title}>Nearby Medical Centers To You</Text>
 
-        {/* <TouchableOpacity style={styles.showMapBtn} onPress={() => navigation.navigate("NearByCentersMapView")}>
+        <TouchableOpacity style={styles.showMapBtn} onPress={() => navigation.navigate("NearByCentersMapView")}>
             <Text style={styles.showMaptxt} >Show on Map</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         {medicalCenters ? (
             // Data is available, map over the medicalCenters and render them
@@ -102,7 +102,7 @@ const NearByMedicalCenters = ({navigation}) => {
             ))
             ) : (
             // Data is not available, display a loading message
-            <Text style={styles.loading}>Loading... Please Wait..</Text>
+            <Text style={styles.loading}>Currently there are no any medical centers within your city</Text>
             )}
 
         <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('AllMedicalCenters')}>

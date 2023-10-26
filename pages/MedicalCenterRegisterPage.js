@@ -128,6 +128,7 @@ const MedicalCenterRegisterPage = ({route, navigation}) =>{
         .catch(err => {
             console.log(err);
         });
+        console.log(result)
     };
 
     const handleUpload = async () => {
@@ -157,6 +158,7 @@ const MedicalCenterRegisterPage = ({route, navigation}) =>{
                 getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
                   setImageUrl(downloadURL);
                   setMessage('Upload completed');
+                  console.log(downloadURL)
                 });
               },
             );
@@ -206,7 +208,7 @@ const MedicalCenterRegisterPage = ({route, navigation}) =>{
 
             <Text style={styles.text}>Profile Image</Text>
             <TouchableOpacity style={styles.input} onPress={imagePicker}>
-                {message ? <Text>{message}</Text> : <Text>Touch here to select</Text>}
+                {message ? <Text>{message}</Text> : <Text>Touch here to pick image</Text>}
             </TouchableOpacity>
             
             <Text style={styles.text}>Password</Text>

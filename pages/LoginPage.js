@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, ScrollView, TouchableOpacity, Alert, TextInput } from "react-native";
+import { Image, StyleSheet, Text, ScrollView, TouchableOpacity, Alert, TextInput, ImageBackground} from "react-native";
 import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import { saveUserSession } from "../SessionManager/SessionManager";
 import { getDatabase, ref, get } from 'firebase/database';
@@ -73,29 +73,34 @@ const LoginPage = ({ navigation }) =>{
 
 
     return(
-        <ScrollView>
-            {/* <ToolBarWithoutIcon/> */}
-            <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
+        <ImageBackground
+            source={require('../assets/images/selection-back.jpg')}
+            style={styles.backgroundImage}
+        >
+            <ScrollView>
+                {/* <ToolBarWithoutIcon/> */}
+                <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
 
-            <Text style={styles.welcome}>Hello there</Text>
-            <Text style={styles.medifind}>Welcome back</Text> 
+                <Text style={styles.welcome}>Hello there</Text>
+                <Text style={styles.medifind}>Welcome back</Text> 
 
-            <Text style={styles.loginText}>Let's log you in...</Text>
+                <Text style={styles.loginText}>Let's log you in...</Text>
 
-            <TextInput style={styles.input} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
-            <TextInput style={styles.input} placeholder="Password" name="password" value={password} secureTextEntry={true} onChangeText={text => setPassword(text)}></TextInput>
+                <TextInput style={styles.input} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
+                <TextInput style={styles.input} placeholder="Password" name="password" value={password} secureTextEntry={true} onChangeText={text => setPassword(text)}></TextInput>
 
-             {/* <TextInputBox placeH="example@email.com" name="email" value={email} onChangeT={text => setEmail(text)}></TextInputBox>
-             <TextInputBox placeH="Password" name="password" value={password} onChangeT={text => setPassword(text)}></TextInputBox> */}
- 
-            <TouchableOpacity style={styles.btn} onPress={login}>
-                <Text style={styles.btntext}>Login</Text>
-            </TouchableOpacity>
+                {/* <TextInputBox placeH="example@email.com" name="email" value={email} onChangeT={text => setEmail(text)}></TextInputBox>
+                <TextInputBox placeH="Password" name="password" value={password} onChangeT={text => setPassword(text)}></TextInputBox> */}
+    
+                <TouchableOpacity style={styles.btn} onPress={login}>
+                    <Text style={styles.btntext}>Login</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('RegisterSelection')}>
-                <Text style={styles.dont}>New User ? Sign Up</Text>
-            </TouchableOpacity>
-        </ScrollView>
+                <TouchableOpacity onPress={() => navigation.navigate('RegisterSelection')}>
+                    <Text style={styles.dont}>New User ? Sign Up</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </ImageBackground>
     );
 }
 
@@ -172,7 +177,12 @@ const styles = StyleSheet.create({
         marginLeft: '8%',
         fontWeight: 'bold',
         color: 'black'
-    } 
+    },
+
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', 
+    },
 
 })
 
