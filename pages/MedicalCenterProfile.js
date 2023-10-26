@@ -18,7 +18,7 @@ const MedicalCenterProfile = ({navigation}) => {
     const [address, setAddress] = useState('');
     const [facilities, setFacilities] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
     const [city, setCity] = useState('');
 
     const [updated, setUpdated] = useState(false);

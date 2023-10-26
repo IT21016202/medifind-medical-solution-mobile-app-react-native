@@ -7,7 +7,7 @@ import { saveUserSession } from "../SessionManager/SessionManager";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { storage, storageRef } from '../Firebase/FirebaseConfing';
 
-const MedicalCenterRegisterPage = ({navigation}) =>{
+const MedicalCenterRegisterPage = ({route, navigation}) =>{
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [pharmacyName, setPharmacyName] = useState("");
@@ -72,6 +72,7 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
         // Create a new user to authentication
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+            const {latitude, longitude} = route.params;
             const userData = {
                 ID: userCredential.user.uid,
                 Name: name,
@@ -83,6 +84,8 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
                 Description: description,
                 Certificate: certificate,
                 Image: imageUrl,
+                Latitude: latitude,
+                Longitude: longitude,
                 Type: 'medical',
                 CreatedAt: JSON.stringify(new Date()),
                 UpdatedAt : JSON.stringify(new Date())
@@ -172,10 +175,15 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
             <Text style={styles.medifind}>MediFind</Text>
             <Text style={styles.registraion}>Medical Center Registration</Text>  
 
+            <Text style={styles.text}>Your Location</Text>
+            <TouchableOpacity style={styles.input} onPress={() => navigation.navigate('LocationPicker')}>
+                <Text>Touch here to pick location</Text>
+            </TouchableOpacity>
+
             <Text style={styles.text}>Email</Text>
             <TextInput style={styles.input} name="email" placeholder="example@email.com" value={email} onChangeText={text => setEmail(text)}></TextInput>
 
-            <Text style={styles.text}>Name</Text>
+            <Text style={styles.text}>Owner's Name</Text>
             <TextInput style={styles.input} name="name" value={name} onChangeText={text => setName(text)}></TextInput>
 
             <Text style={styles.text}>Pharmacy Name</Text>
@@ -198,9 +206,9 @@ const MedicalCenterRegisterPage = ({navigation}) =>{
 
             <Text style={styles.text}>Profile Image</Text>
             <TouchableOpacity style={styles.input} onPress={imagePicker}>
-                <Text>Touch here to select</Text>
+                {message ? <Text>{message}</Text> : <Text>Touch here to select</Text>}
             </TouchableOpacity>
-
+            
             <Text style={styles.text}>Password</Text>
             <TextInput style={styles.input} name="password" value={password} secureTextEntry={true} onChangeText={text => setPassword(text)}></TextInput>
 

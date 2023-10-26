@@ -7,7 +7,6 @@ const NearByCentersMapView = () => {
 
     const database = getDatabase();
     const [medicalCenters, setMedicalCenters] = useState([]);
-    const [donors, setDonors] = useState([]);
 
     useEffect(() => {
         const usersRef = ref(database, 'Users'); // Replace with your actual Firebase path
@@ -15,9 +14,8 @@ const NearByCentersMapView = () => {
           if (snapshot.exists()) {
             const data = snapshot.val();
             const usersArray = Object.values(data);
-            const donorUsers = usersArray.filter(user => user.Type === 'donor');
-            //console.log('Donor Data:', donorUsers); // Filter users with type 'donor'
-            setDonors(donorUsers);
+            const centers = usersArray.filter(user => user.Type === 'medical');
+            setMedicalCenters(centers);
           }
         });
       }, []);
@@ -26,21 +24,21 @@ const NearByCentersMapView = () => {
         <View style={styles.container}>
             <MapView style={styles.map}
                 initialRegion={{
-                latitude: 6.0329, // Set an initial location or use the first donor's location
+                latitude: 6.0329, // Set an initial location
                 longitude: 80.2168,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             }}>
 
-            {donors.map((donor, index) => (
+            {medicalCenters.map((medicalCenter, index) => (
                 <Marker
                 key={index}
                 coordinate={{
-                  latitude: donor.Latitude,
-                  longitude: donor.Longitude,
+                  latitude: medicalCenter.Latitude,
+                  longitude: medicalCenter.Longitude,
                 }}
-                title={donor.Name}
-                description={'Blood Type: ' +donor.BloodType}
+                title={medicalCenter.Name}
+                description={'Blood Type: ' +medicalCenter.BloodType}
               />
                
             ))}   
