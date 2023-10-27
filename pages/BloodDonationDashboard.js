@@ -14,31 +14,31 @@ export default BloodDonationDashboard = ({navigation}) => {
     {
       id: 1,
       name: 'Blood Request Feed',
-      image: 'https://img.icons8.com/clouds/100/000000/groups.png',
+      image: 'https://cdn-icons-png.flaticon.com/512/3787/3787085.png',
       count: 124.711,
     },
     {
       id: 2,
       name: 'Blood Donors',
-      image: 'https://img.icons8.com/color/100/000000/real-estate.png',
+      image: "https://w7.pngwing.com/pngs/631/219/png-transparent-donor-logo-blood-donation-world-blood-donor-day-american-red-cross-donate-miscellaneous-emblem-heart-thumbnail.png",
       count: 234.722,
     },
     {
       id: 3,
       name: 'Blood Donors Map View',
-      image: 'https://img.icons8.com/color/100/000000/find-matching-job.png',
+      image: 'https://cdn-icons-png.flaticon.com/512/235/235861.png',
       count: 324.723,
     },
     {
       id: 4,
       name: 'Add Blood Request',
-      image: 'https://img.icons8.com/clouds/100/000000/employee-card.png',
+      image: 'https://cdn-icons-png.flaticon.com/512/3063/3063077.png',
       count: 154.573,
     },
     {
       id: 5,
       name: 'Profile',
-      image: 'https://img.icons8.com/color/100/000000/land-sales.png',
+      image: 'https://cdn-icons-png.flaticon.com/512/2919/2919906.png',
       count: 124.678,
     },
   ];
