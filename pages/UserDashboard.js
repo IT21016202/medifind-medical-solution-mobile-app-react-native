@@ -21,7 +21,7 @@ const UserDashboard = ({navigation}) => {
                     <Text style={styles.text}>Find a Doctor</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={navigateToProfile}>
+            <TouchableOpacity style={styles.button} >
                     <Image style={styles.image} source={require('../assets/images/icons/icon(5).png')}/>
                     <Text style={styles.text}>Appoinments</Text>
             </TouchableOpacity> 

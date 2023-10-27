@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 
 const PrescriptionDetails = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const { date, doctorName, doctorType, doctorMobile, username } = route.params;
 
@@ -71,7 +72,15 @@ const PrescriptionDetails = () => {
         </View>
         <View style={styles.buttonContainer}>
                 <Button onPress={() => {}} style={styles.button} >Make PDF</Button>
-                <Button onPress={() => {}} style={styles.button} >Send To Pharmacy</Button>
+                <Button
+          onPress={() => {
+            // Navigate to the PharmacyScreen when the button is pressed
+            navigation.navigate('PharmacyScreen');
+          }}
+          style={styles.button}
+        >
+          Send To Pharmacy
+        </Button>
               </View>
       </View>
     </ImageBackground>

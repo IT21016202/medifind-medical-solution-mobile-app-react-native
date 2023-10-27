@@ -69,7 +69,7 @@ const ProfilePage = () => {
         </View>
 
         <View style={styles.buttonsSection}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Appointments')}>
             <Text style={styles.buttonText}>All Appointments</Text>
           </TouchableOpacity>
 
@@ -77,7 +77,7 @@ const ProfilePage = () => {
             <Text style={styles.buttonText}>Contact History</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ChatListPage')}>
             <Text style={styles.buttonText}>Messages</Text>
           </TouchableOpacity>
 

@@ -102,7 +102,17 @@ const getRandomAppointmentDates = (count) => {
           </ScrollView>
   
           <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.chatButton} onPress={() => console.log('Chat')}>
+          <TouchableOpacity
+            style={styles.chatButton}
+            onPress={() => {
+              navigation.navigate('ChatScreen', {
+                doctorName, // Pass the doctorName to ChatScreen
+                doctorType,
+                doctorMobile,
+                username,
+              });
+            }}
+          >
             <Text style={styles.buttonText}>Chat</Text>
           </TouchableOpacity>
 
