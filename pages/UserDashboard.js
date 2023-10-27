@@ -14,8 +14,7 @@ import {
 } from '../SessionManager/SessionManager';
 
 const UserDashboard = ({navigation}) => {
-
-    const [user, setUser] = useState('');
+  const [user, setUser] = useState('');
 
   useFocusEffect(() => {
     const checkUserSession = async () => {
@@ -30,56 +29,72 @@ const UserDashboard = ({navigation}) => {
     navigation.navigate('Home');
   }
 
-    return(
-        <ScrollView style={styles.view}>
-            <Text style={styles.topic}>Hello {user.Name}, Whats you find ...</Text>
-    
-            <TouchableOpacity>
-                <Image style={styles.image} source={require('../assets/images/FindADoctor.png')}/>
-            </TouchableOpacity>
-            
-            <TouchableOpacity>
-                <Image style={styles.image} source={require('../assets/images/Appoinments.png')}/>
-            </TouchableOpacity>
-            
-            <TouchableOpacity onPress={() => navigation.navigate('NearByMedicalCenters')}>
-                <Image style={styles.image} source={require('../assets/images/MedicalCenters.png')}/>
-            </TouchableOpacity>
-            
-            <TouchableOpacity>
-                <Image style={styles.image} source={require('../assets/images/FindMedicine.png')}/>
-            </TouchableOpacity>
+  return (
+    <ScrollView style={styles.view}>
+      <Text style={styles.topic}>Hello {user.Name}, Whats you find ...</Text>
 
-            <TouchableOpacity>
-                    <Image style={styles.image} source={require('../assets/images/RequestBlood.png')}/>
-            </TouchableOpacity>
+      <TouchableOpacity>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/FindADoctor.png')}
+        />
+      </TouchableOpacity>
 
-            <Button title='Log Out' onPress={logout}></Button>
-            <Text></Text>
-            <Text></Text>
-        </ScrollView>
-    )
-}
+      <TouchableOpacity>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/Appoinments.png')}
+        />
+      </TouchableOpacity>
 
+      <TouchableOpacity
+        onPress={() => navigation.navigate('NearByMedicalCenters')}>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/MedicalCenters.png')}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/FindMedicine.png')}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('BloodDonationDashboard')}>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/RequestBlood.png')}
+        />
+      </TouchableOpacity>
+
+      <Button title="Log Out" onPress={logout}></Button>
+      <Text></Text>
+      <Text></Text>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   view: {
     padding: 20,
   },
 
-    topic:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-        marginBottom: 20,
-    },
+  topic: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 20,
+  },
 
-    image:{
-       marginLeft: 15,
-       width: 330,
-       height: 140,
-       marginBottom: 25,
-    },
+  image: {
+    marginLeft: 15,
+    width: 330,
+    height: 140,
+    marginBottom: 25,
+  },
 
   text: {
     padding: 30,
