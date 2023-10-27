@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ScrollView, ImageBackground, Image } from 'react-native';
 import { getUserSession } from '../SessionManager/SessionManager';
 import { getDatabase, ref, get, set, update, remove } from 'firebase/database';
 import { getAuth, deleteUser} from 'firebase/auth';
+import { clearUserSession } from '../SessionManager/SessionManager';
 
 
 const MedicalCenterProfile = ({navigation}) => {
@@ -17,10 +18,8 @@ const MedicalCenterProfile = ({navigation}) => {
     const [address, setAddress] = useState('');
     const [facilities, setFacilities] = useState('');
     const [description, setDescription] = useState('');
-    //const [image, setImage] = useState('');
+    const [image, setImage] = useState('');
     const [city, setCity] = useState('');
-
-    const [updated, setUpdated] = useState(false);
 
     useEffect(() => {
         const checkUserSession = async () => {
@@ -29,13 +28,14 @@ const MedicalCenterProfile = ({navigation}) => {
             // Create a reference to the specific document
             const userRef = ref(database, 'Users/' + userSession.uid);
     
-            // Retrieve data from the specific documen
+            // Retrieve data from the specific document
             get(userRef)
             .then((snapshot)=>{
                 if(snapshot.exists()){
                     // Data exists in the document
                     const data = snapshot.val();
                     setUserData(data);
+                    console.log(data)
 
                     setId(data.ID);
                     setName(data.Name);
@@ -45,7 +45,7 @@ const MedicalCenterProfile = ({navigation}) => {
                     setCity(data.City);
                     setFacilities(data.facilities);
                     setDescription(data.Description);
-                    //setImage(data.Image);
+                    setImage(data.Image);
                 }
                 else{
                     console.log('User Data Not Found !');
@@ -57,9 +57,9 @@ const MedicalCenterProfile = ({navigation}) => {
             
         };
         checkUserSession();
-        setUpdated(false);
-    }, [updated]);
+    },[]);
    
+
     const updateProfile = () => {
         
         // Create a reference to the specific document
@@ -74,6 +74,7 @@ const MedicalCenterProfile = ({navigation}) => {
             City: city,
             facilities: facilities,
             Description: description,
+            Image: image
         };
 
         console.log(data);
@@ -83,70 +84,143 @@ const MedicalCenterProfile = ({navigation}) => {
         .then(()=>{
             console.log('User Profile Updated !');
             alert('Profile Updated !');
-            setUpdated(true);
         })
         .catch((err)=>{
             console.error('Error updating user profile:', err);
         });
     };
 
+
+    const deleteProfile = () => {
+        const user = auth.currentUser;
+        console.log(user)
+    
+        if (user) {
+            // If there is an authenticated user, proceed with deletion
+            deleteUser(user)
+                .then(() => {
+                    console.log('User deleted successfully!');
+                    alert('User deleted successfully!');
+                    remove(ref(database, 'Users/' + userData.ID))
+                        .then(() => {
+                            console.log('User data deleted successfully!');
+                            alert('User data deleted successfully!');
+                            logout();
+                        })
+                        .catch((err) => {
+                            console.error('Error deleting user data:', err);
+                        });
+                })
+                .catch((err) => {
+                    console.error('Error deleting user:', err);
+                });
+        } else {
+            // Handle the case where there is no authenticated user
+            console.error('No authenticated user found.');
+            alert('No authenticated user found.');
+        }
+    };
+    
+
+    function logout() {
+        clearUserSession();
+        navigation.navigate('Home');
+    }
+
   
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Medical Center Profile</Text>
-            <Text>IMAGE</Text>
-            {/* <TextInput style={styles.input} placeholder="ID" value={id} onChange={text => setId(text)} editable={false}/> */}
-            <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={text => setName(text)}/>
-            <TextInput style={styles.input} placeholder="Mobile" value={mobile} onChangeText={text => setMobile(text)}/>
-            <TextInput style={styles.input} placeholder="Pharmacy Name" value={pharmacyName} onChangeText={text => setPharmacyName(text)}/>
-            <TextInput style={styles.input} placeholder="Address" value={address} onChangeText={text => setAddress(text)}/>
-            <TextInput style={styles.input} placeholder="City" value={city} onChangeText={text => setCity(text)}/>
-            <TextInput style={styles.input} placeholder="Facilities" value={facilities} onChangeText={text => setFacilities(text)}/>
-            <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={text => setDescription(text)}/>
-            
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.btnSave} onPress={() => updateProfile()}>
-                    <Text style={styles.btnText}>Save Data</Text>
-                </TouchableOpacity>
+        <ImageBackground
+            source={require('../assets/images/back1.jpg')}
+            style={styles.backgroundImage}
+        >
 
-                <TouchableOpacity style={styles.btnDelete} onPress={() => deleteProfile()}>
-                    <Text style={styles.btnText}>Delete Profile</Text>
-                </TouchableOpacity>  
-            </View>
+            <ScrollView style={styles.container}>
+                <Text style={styles.title}>Medical Center Profile</Text>
 
-            <TouchableOpacity style={styles.btnLogout} onPress={() => navigation.navigate('MedicalCenterDashboard')}>
+                <Text style={styles.text}>Image</Text>
+                {image != null ? (
+                    <Image source={{uri: image}} style={styles.img}/>
+                ) : (<Text>No Image Found...</Text>)}
+                
+
+                <Text style={styles.text}>User's Name : </Text>
+                <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={text => setName(text)}/>
+
+                <Text style={styles.text}>Mobile : </Text>
+                <TextInput style={styles.input} placeholder="Mobile" value={mobile} onChangeText={text => setMobile(text)}/>
+
+                <Text style={styles.text}>Pharmacy Name : </Text>
+                <TextInput style={styles.input} placeholder="Pharmacy Name" value={pharmacyName} onChangeText={text => setPharmacyName(text)}/>
+
+                <Text style={styles.text}>Address : </Text>
+                <TextInput style={styles.input} placeholder="Address" value={address} onChangeText={text => setAddress(text)}/>
+
+                <Text style={styles.text}>City : </Text>
+                <TextInput style={styles.input} placeholder="City" value={city} onChangeText={text => setCity(text)}/>
+
+                <Text style={styles.text}>Facilities : </Text>
+                <TextInput style={styles.input} placeholder="Facilities" value={facilities} onChangeText={text => setFacilities(text)}/>
+
+                <Text style={styles.text}>Description : </Text>
+                <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={text => setDescription(text)}/>
+                
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.btnSave} onPress={() => updateProfile()}>
+                        <Text style={styles.btnText}>Save Data</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btnDelete} onPress={() => deleteProfile()}>
+                        <Text style={styles.btnText}>Delete Profile</Text>
+                    </TouchableOpacity>  
+                </View>
+
+                <TouchableOpacity style={styles.btnLogout} onPress={logout}>
                     <Text style={styles.btnText}>Log Out</Text>
-            </TouchableOpacity>
-            
-        </View>
+                </TouchableOpacity>
+                
+            </ScrollView>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
+        flex: 1, 
     }, 
+
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginTop: 16,
+        textAlign: 'center',
+        marginBottom: 20,
+        color: 'black',
+    },
+
+    text: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 5,
+        marginLeft: 40,
     },
 
     input: {
         height: 40,
-        borderWidth: 1,
-        borderColor: '#13BC9E',
         borderRadius: 6,
         padding: 10,
         width: '80%',
         marginBottom: 15,
+        marginLeft: 40,
+        backgroundColor: 'white',
+        opacity: 0.8,
     },
 
     buttonContainer:{
         marginTop: 20,
         flexDirection: 'row', // Arrange items in a row
         justifyContent: 'space-between', // Arrange items
+        textAlign: 'center',
     },
 
     btnSave: {
@@ -155,6 +229,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         width: '35%',
         alignItems: 'center',
+        marginLeft: 40,
     },
 
     btnDelete: {
@@ -163,7 +238,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         width: '35%',
         alignItems: 'center',
-        marginLeft: 40,
+        marginRight: 40,
     },
 
     btnLogout: {
@@ -173,11 +248,25 @@ const styles = StyleSheet.create({
         width: '80%',
         alignItems: 'center',
         marginTop: 15,
+        marginLeft: 40,
+        marginBottom: 20,
     },
 
     btnText: {
         color: 'white',
         fontWeight: 'bold',
+    },
+
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', 
+    },
+
+    img: {
+        width: 310,
+        height: 150,
+        marginLeft: 40,
+        marginBottom: 15,
     },
 });
 

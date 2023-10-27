@@ -34,6 +34,10 @@ import OneMedicalCenter from "./pages/OneMedicalCenter";
 import Profile from "./pages/Profile";
 import BloodDonationDashboard from "./pages/BloodDonationDashboard";
 import UserAddedRequests from "./pages/UserAddedRequests";
+import Scheduele from "./pages/Scheduele";
+import SplashScreen from "./pages/SplashScreen";
+import NearByCentersMapView from "./pages/NearByCentersMapView";
+import LocationPicker from "./pages/LocationPicker";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +47,7 @@ const App = () =>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="SplashScreen" component={SplashScreen} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Home" component={HomePage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}} />
         <Stack.Screen name="UserDashboard" component={UserDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff' , headerTitle: ''}}/>
         <Stack.Screen name="Login" component={LoginPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
@@ -70,6 +75,9 @@ const App = () =>{
         <Stack.Screen name="MedicalCenterProfile" component={MedicalCenterProfile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="BloodDonationDashboard" component={BloodDonationDashboard}     options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="UserAddedRequests" component={UserAddedRequests}     options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="Scheduele" component={Scheduele} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="NearByCentersMapView" component={NearByCentersMapView} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="LocationPicker" component={LocationPicker} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
