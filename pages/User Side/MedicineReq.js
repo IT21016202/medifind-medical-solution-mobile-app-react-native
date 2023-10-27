@@ -12,10 +12,12 @@ import {getUserSession} from '../../SessionManager/SessionManager';
 import {useFocusEffect} from '@react-navigation/native';
 import SearchInputBox from '../../components/SearchInputBox';
 import {equalTo, get, getDatabase, query, ref} from 'firebase/database';
+import MedicineReqHistory from './MedicineReqHistory';
 
 const MedicineReq = ({navigation}) => {
   const [data, setData] = useState([]);
   const [lenght, setLenght] = useState('');
+  const [btnValue, setBtnValue] = useState(1);
 
   const database = getDatabase();
 
@@ -48,20 +50,23 @@ const MedicineReq = ({navigation}) => {
 
   const handleMedicineRequestsPress = () => {
     setMedicineRequestsSelected(true);
+    setBtnValue(1);
   };
 
   const handleMedicineRequestHistoryPress = () => {
     setMedicineRequestsSelected(false);
+    setBtnValue(2);
   };
 
   const PressAdd = () => {
     navigation.navigate('AddMediRequest');
   };
 
-  return (
-    <View style={styles.container}>
-      {/* <SearchInputBox /> */}
+  console.log(btnValue);
 
+  return (
+    <ScrollView style={styles.container}>
+      <SearchInputBox />
       <ScrollView horizontal contentContainerStyle={{padding: 10}}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -75,58 +80,6 @@ const MedicineReq = ({navigation}) => {
               }>
               Accepted Medicine Requests
             </Text>
-
-            {data &&
-              data.map((item, index) => (
-                <View style={styles.requests} key={index}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      padding: 5,
-                      alignItems: 'center',
-                    }}>
-                    <Text style={{color: '#046352', fontSize: 25}}>
-                      {item.Medicine_Name}
-                    </Text>
-
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('BuyMedicine', {
-                          id: item.requestID,
-                          pharmacyID: item.pharmacyID,
-                        })
-                      }>
-                      <Text
-                        style={{
-                          color: 'white',
-                          padding: 8,
-                          width: 50,
-                          borderRadius: 10,
-                          backgroundColor: '#046352',
-                        }}>
-                        View
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      alignContent: 'center',
-                      padding: 5,
-                    }}>
-                    <Image
-                      source={require('../../assets/images/icons/user.jpg')}
-                      style={{height: 40, width: 40, borderRadius: 30}}
-                    />
-
-                    <Text style={{color: 'black'}}>{item.pharmacyName}</Text>
-                  </View>
-                </View>
-              ))}
           </TouchableOpacity>
         </View>
 
@@ -146,10 +99,69 @@ const MedicineReq = ({navigation}) => {
         </View>
       </ScrollView>
 
+      {btnValue == 1 ? (
+        <View>
+          {data &&
+            data.map((item, index) => (
+              <View style={styles.requests} key={index}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    padding: 5,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: '#046352', fontSize: 25}}>
+                    {item.Medicine_Name}
+                  </Text>
+
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('BuyMedicine', {
+                        id: item.requestID,
+                        pharmacyID: item.pharmacyID,
+                      })
+                    }>
+                    <Text
+                      style={{
+                        color: 'white',
+                        padding: 8,
+                        width: 50,
+                        borderRadius: 10,
+                        backgroundColor: '#046352',
+                      }}>
+                      View
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    alignContent: 'center',
+                    padding: 5,
+                  }}>
+                  <Image
+                    source={{uri: item.pharmacyImage}}
+                    style={{height: 40, width: 40, borderRadius: 30}}
+                  />
+
+                  <Text style={{color: 'black'}}>{item.pharmacyName}</Text>
+                </View>
+              </View>
+            ))}
+        </View>
+      ) : (
+        <View>
+          <MedicineReqHistory />
+        </View>
+      )}
       <TouchableOpacity style={styles.plusButton} onPress={PressAdd}>
         <Text style={styles.plusButtonText}>+</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -170,19 +182,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   plusButton: {
-    position: 'absolute', // Position the button absolutely
-    bottom: 20, // Adjust as needed
-    right: 20, // Adjust as needed
-    width: 60,
-    height: 60,
-    backgroundColor: '#046352', // Button background color
-    borderRadius: 30, // Half of width and height to make it round
-    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20, // Adjust the bottom value to position the button as desired
+    right: 20, // Adjust the right value to position the button as desired
+    backgroundColor: '#046352',
+    width: 50,
+    height: 50,
+    borderRadius: 25, // To make it circular
     justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    elevation: 5, // A
   },
   plusButtonText: {
     fontSize: 24,
-    color: 'white', // Button text color
+    color: 'white',
+    // Button text color
   },
 
   requests: {
@@ -190,7 +205,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     margin: 10,
     padding: 10,
-    width: 250,
+    marginLeft: 20,
+    width: 350,
     borderRadius: 15,
   },
 

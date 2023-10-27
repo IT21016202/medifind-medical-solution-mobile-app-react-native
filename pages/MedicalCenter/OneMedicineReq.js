@@ -16,13 +16,14 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const OneMedicineReq = ({route, navigation}) => {
   const {id} = route.params;
-  const [currentLocation, setCurrentLocation] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState([]);
   const [price, setPrice] = useState('');
   const [data, setData] = useState('');
 
   const [pharmacyID, setPharmacyID] = useState('');
   const [pharmacyName, setPharmacyName] = useState('');
   const [pharmacyNo, setPharmacyNo] = useState('');
+  const [pharmacyImage, setPharmacyImage] = useState('');
 
   const database = getDatabase();
 
@@ -33,6 +34,11 @@ const OneMedicineReq = ({route, navigation}) => {
       setPharmacyName(userSession.PharmacyName);
       setPharmacyID(userSession.uid);
       setPharmacyNo(userSession.Mobile);
+      setPharmacyImage(userSession.Image);
+
+      const latitude = userSession.Latitude;
+      const longtude = userSession.Longitude;
+      setCurrentLocation({latitude, longtude});
     };
     checkUserSession();
   });
@@ -48,7 +54,7 @@ const OneMedicineReq = ({route, navigation}) => {
           setData(data);
           console.log('One', data);
 
-          getCurrentLocation();
+          //getCurrentLocation();
         } else {
           console.log('Data Not Found !');
         }
@@ -58,16 +64,16 @@ const OneMedicineReq = ({route, navigation}) => {
       });
   }, []);
 
-  const getCurrentLocation = async () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        setCurrentLocation({latitude, longitude});
-      },
-      error => Alert.alert('Error', error.message),
-      {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
-    );
-  };
+  // const getCurrentLocation = async () => {
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       const {latitude, longitude} = position.coords;
+  //       setCurrentLocation({latitude, longitude});
+  //     },
+  //     error => Alert.alert('Error', error.message),
+  //     {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
+  //   );
+  // };
 
   const handleSubmit = async () => {
     const databasePath = 'AccpectedMedicineRequests';
@@ -75,33 +81,36 @@ const OneMedicineReq = ({route, navigation}) => {
     // Generate a new unique key for the item using the push method
     const newKey = push(ref(database, databasePath));
 
-    await getCurrentLocation();
+    //await getCurrentLocation();
 
-    console.log('user name ', data.userame);
+    if (price === '' || price === null || isNaN(price)) {
+      Alert.alert('Please Enter a Valid Price for Medicine');
+    } else {
+      const reqData = {
+        PatientUserName: data.userame,
+        PatientUserID: data.userID,
+        Medicine_Name: data.Medicine_Name,
+        pharmacyID: pharmacyID,
+        pharmacyName: pharmacyName,
+        pharmacyNo: pharmacyNo,
+        pharmacyImage: pharmacyImage,
+        location: currentLocation,
+        medicinePrice: price,
+        requestID: newKey.key,
+      };
 
-    const reqData = {
-      PatientUserName: data.userame,
-      PatientUserID: data.userID,
-      Medicine_Name: data.Medicine_Name,
-      pharmacyID: pharmacyID,
-      pharmacyName: pharmacyName,
-      pharmacyNo: pharmacyNo,
-      location: currentLocation,
-      medicinePrice: price,
-      requestID: newKey.key,
-    };
+      set(newKey, reqData)
+        .then(() => {
+          console.log('data added to Realtime Database');
 
-    set(newKey, reqData)
-      .then(() => {
-        console.log('data added to Realtime Database');
+          Alert.alert('Request Submited Successfuly');
 
-        Alert.alert('Request Submited Successfuly');
-
-        navigation.navigate('MediRequest');
-      })
-      .catch(error => {
-        console.error('Error adding  data to Realtime Database:', error);
-      });
+          navigation.navigate('MedicalMediReq');
+        })
+        .catch(error => {
+          console.error('Error adding  data to Realtime Database:', error);
+        });
+    }
   };
 
   return (

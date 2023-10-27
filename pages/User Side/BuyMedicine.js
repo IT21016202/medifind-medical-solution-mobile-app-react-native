@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {get, getDatabase, set, ref, push} from 'firebase/database';
 import call from 'react-native-phone-call';
+import MapView, {Marker} from 'react-native-maps';
 
 const BuyMedicine = ({route, navigation}) => {
   const {id, pharmacyID} = route.params;
@@ -18,13 +19,16 @@ const BuyMedicine = ({route, navigation}) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    //Get one medical center by id
     const database = getDatabase();
     const medicineReq = ref(database, 'AccpectedMedicineRequests/' + id);
     get(medicineReq)
       .then(snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.val();
+          console.log(data);
+
+          console.log(data.location.longitude);
+
           setData(data);
         } else {
           console.log('Data Not Found !');
@@ -62,7 +66,6 @@ const BuyMedicine = ({route, navigation}) => {
   };
 
   const incrementQuantity = () => {
-    console.log(quantity);
     setQuantity(quantity + 1);
   };
 
@@ -92,32 +95,54 @@ const BuyMedicine = ({route, navigation}) => {
         </Text>
       </View>
 
-      <View style={{height: 250, backgroundColor: 'red', margin: 20}}>
-        <Text>Map</Text>
-      </View>
+      {data && (
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: data.location.latitude,
+              longitude: data.location.longtude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}>
+            {
+              <Marker
+                coordinate={{
+                  latitude: data.location.latitude,
+                  longitude: data.location.longtude,
+                }}
+                title={data.pharmacyName}
+                description={'Contact: ' + data.pharmacyNo}
+              />
+            }
+          </MapView>
+        </View>
+      )}
 
       <View style={{margin: 20}}>
-        <View style={styles.view}>
-          <Text style={{color: '#046352', fontSize: 25}}>
-            {data.pharmacyName}
-          </Text>
-          <Text style={{color: '#046352', fontSize: 23}}>
-            Rs {data.medicinePrice * quantity}.00
-          </Text>
-        </View>
+        {data && (
+          <View style={styles.view}>
+            <Text style={{color: '#046352', fontSize: 25}}>
+              {data.pharmacyName}
+            </Text>
+            <Text style={{color: '#046352', fontSize: 23}}>
+              Rs {data.medicinePrice * quantity}.00
+            </Text>
+          </View>
+        )}
 
         <View style={[styles.view, {marginTop: 30}]}>
           <Text style={{color: '#046352', fontSize: 20}}>Quantity</Text>
 
           <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <TouchableOpacity style={styles.btn} onPress={decrementQuantity}>
-              <Text>-</Text>
+              <Text style={{color: 'white'}}>-</Text>
             </TouchableOpacity>
 
             <Text style={{color: '#046352', fontSize: 23}}>{quantity}</Text>
 
             <TouchableOpacity style={styles.btn} onPress={incrementQuantity}>
-              <Text>+</Text>
+              <Text style={{color: 'white'}}>+</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -174,33 +199,52 @@ const BuyMedicine = ({route, navigation}) => {
           borderTopRightRadius: 20,
         }}>
         <Text style={{fontSize: 18, color: 'white', margin: 8}}>Reviews</Text>
-        {reviews.map((review, index) => (
-          <View
-            key={index}
-            style={{backgroundColor: 'white', padding: 10, borderRadius: 10}}>
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review, index) => (
             <View
+              key={index}
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+                backgroundColor: 'white',
+                padding: 8,
+                borderRadius: 10,
+                margin: 2,
               }}>
-              <Image
-                source={require('../../assets/images/icons/user.jpg')}
-                style={{height: 40, width: 40, borderRadius: 30}}
-              />
-              <Text style={{color: 'black', margin: 10, fontSize: 20}}>
-                {review.UserName}
-              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Image
+                  source={require('../../assets/images/icons/user.jpg')}
+                  style={{height: 40, width: 40, borderRadius: 30}}
+                />
+                <Text style={{color: 'black', margin: 10, fontSize: 20}}>
+                  {review.UserName}
+                </Text>
 
-              <Text style={{color: 'black', margin: 10, fontSize: 10}}>
-                {review.CreatedAt}
+                <Text style={{color: 'black', margin: 10, fontSize: 10}}>
+                  {review.CreatedAt}
+                </Text>
+              </View>
+
+              <Text style={{color: 'black', fontSize: 18}}>
+                {review.Review}
               </Text>
+              {/* Add more properties you want to display */}
             </View>
-
-            <Text style={{color: 'black', fontSize: 18}}>{review.Review}</Text>
-            {/* Add more properties you want to display */}
+          ))
+        ) : (
+          <View
+            style={{
+              backgroundColor: 'white',
+              padding: 10,
+              borderRadius: 10,
+              color: 'black',
+            }}>
+            <Text>No Reviews Yet</Text>
           </View>
-        ))}
+        )}
       </View>
     </ScrollView>
   );
@@ -221,6 +265,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  mapContainer: {
+    height: 300, // Adjust the height as needed
+    width: '100%', // Takes the full width of the parent container
+  },
+  map: {
+    flex: 1, // Take up all available space within the mapContainer
   },
 });
 

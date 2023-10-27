@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import {getDatabase, ref, set, push} from 'firebase/database';
+import MapView, {Marker} from 'react-native-maps';
 
 const AddLocation = ({route, navigation}) => {
   const {medicineName, imageUrl, patientAge, userID, userName} = route.params;
@@ -97,22 +98,43 @@ const AddLocation = ({route, navigation}) => {
         <Text style={styles.topHeader}>Get current location</Text>
       </View>
 
-      <View style={styles.mapStyle}>
-        <TouchableOpacity onPress={permission} style={styles.mapBtn}>
-          <Image
-            source={require('../../assets/images/icons/location.png')}
-            style={{height: 55, width: 55}}
-          />
-          <Text style={styles.mapText}>Click here Get Location</Text>
-        </TouchableOpacity>
+      <View style={styles.mapContainer}>
+        {currentLocation && (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: currentLocation.latitude, // Set an initial location
+              longitude: currentLocation.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}>
+            {
+              <Marker
+                coordinate={{
+                  latitude: currentLocation.latitude,
+                  longitude: currentLocation.longitude,
+                }}
+                title="Your are in here "
+              />
+            }
+          </MapView>
+        )}
 
-        <View style={styles.mapView}>
-          <Text>Latitude: {currentLocation && currentLocation.latitude}</Text>
-          <Text>Longitude: {currentLocation && currentLocation.longitude}</Text>
-        </View>
+        {!currentLocation && (
+          <View style={styles.mapStyle}>
+            <TouchableOpacity onPress={permission} style={styles.mapBtn}>
+              <Image
+                source={require('../../assets/images/icons/location.png')}
+                style={{height: 55, width: 55}}
+              />
+              <Text style={styles.mapText}>Click here Get Location</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
+
       <View style={styles.inputView}>
-        <Text style={{fontSize: 20, color: '#046352'}}>
+        <Text style={{fontSize: 20, color: '#046352', marginTop: 20}}>
           Enter Mobile Number{' '}
         </Text>
         <TextInput
@@ -187,6 +209,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  mapContainer: {
+    height: 300, // Adjust the height as needed
+    width: '95%',
+    margin: 10, // Takes the full width of the parent container
+  },
+  map: {
+    flex: 1, // Take up all available space within the mapContainer
   },
 });
 

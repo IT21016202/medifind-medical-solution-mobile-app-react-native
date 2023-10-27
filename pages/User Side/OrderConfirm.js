@@ -27,13 +27,13 @@ const OrderConfirm = ({route, navigation}) => {
 
   return (
     <ScrollView>
-      <View
+      {/* <View
         style={{
           height: 20,
           backgroundColor: '#046352',
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
-        }}></View>
+        }}></View> */}
       <View
         style={{
           backgroundColor: '#046352',
