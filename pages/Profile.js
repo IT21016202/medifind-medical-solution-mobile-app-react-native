@@ -72,15 +72,15 @@ const Profile = ({navigation}) => {
         </View>
         {userType === 'donor' && (
           <View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoLabel}>Location:</Text>
-          <Text style={styles.infoValue}>{userData.Location}</Text>
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoLabel}>Blood Type:</Text>
-          <Text style={styles.infoValue}>{userData.BloodType}</Text>
-        </View>
-        </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoLabel}>Location:</Text>
+              <Text style={styles.infoValue}>{userData.Location}</Text>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoLabel}>Blood Type:</Text>
+              <Text style={styles.infoValue}>{userData.BloodType}</Text>
+            </View>
+          </View>
         )}
       </View>
       {userType === 'user' && (
@@ -91,7 +91,9 @@ const Profile = ({navigation}) => {
             <Text>Add Blood Request</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => navigation.navigate('UserAddedRequests')}>
             <Text>Previously added Requests</Text>
           </TouchableOpacity>
 
@@ -105,11 +107,15 @@ const Profile = ({navigation}) => {
 
       {userType === 'donor' && (
         <View style={styles.buttonContain}>
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('BloodRequestPage')}>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => navigation.navigate('BloodRequestPage')}>
             <Text>View Blood Request Feed</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('DonorAcceptedRequests')}>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => navigation.navigate('DonorAcceptedRequests')}>
             <Text>View Accepted Requests</Text>
           </TouchableOpacity>
 

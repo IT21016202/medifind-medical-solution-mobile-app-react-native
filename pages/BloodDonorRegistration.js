@@ -11,6 +11,8 @@ import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, ref, set} from 'firebase/database';
 import {saveUserSession} from '../SessionManager/SessionManager';
 import {Picker} from '@react-native-picker/picker';
+
+
 // import DatePicker from 'react-native-datepicker'; // Import the date picker component
 //import DatePicker from '@react-native-datetimepicker/datetimepicker'; // Import the date picker component
 
@@ -27,6 +29,7 @@ const BloodDonorRegistration = ({navigation}) => {
   const [lastDonatedDate, setLastDonatedDate] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+
 
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -88,6 +91,7 @@ const BloodDonorRegistration = ({navigation}) => {
       });
   }
 
+  
   return (
     <ScrollView>
       <Text style={styles.medifind}>MediFind</Text>
@@ -183,29 +187,6 @@ const BloodDonorRegistration = ({navigation}) => {
         value={longitude.toString()} // Convert the number back to a string for input
         onChangeText={text => setLongitude(parseFloat(text))} // Parse the input as a float
       />
-
-      {/* <DatePicker
-        style={{width: '100%', paddingLeft: '8%'}}
-        date={lastDonatedDate}
-        mode="date"
-        placeholder="Select Last Donated Date"
-        format="YYYY-MM-DD"
-        minDate="1900-05-01"
-        maxDate="2100-06-01"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        customStyles={{
-          dateInput: {
-            borderWidth: 0,
-          },
-          dateText: {
-            fontSize: 16,
-          },
-        }}
-        onDateChange={date => {
-          setLastDonatedDate(date);
-        }}
-      /> */}
 
       <MyButton title="Register" onPress={register}></MyButton>
 
