@@ -1,7 +1,7 @@
 import React from "react";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation  } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image, TouchableOpacity, View, StyleSheet, Button } from "react-native";
+import { Image, TouchableOpacity, View, StyleSheet, Button, Text } from "react-native";
 import './Firebase/FirebaseConfing'
 
 //Pages
@@ -38,6 +38,7 @@ const Stack = createNativeStackNavigator();
 
 const App = () =>{
 
+
   return(
     <NavigationContainer>
       <Stack.Navigator>
@@ -66,7 +67,7 @@ const App = () =>{
         <Stack.Screen name="AllMedicalCenters" component={AllMedicalCenters} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="OneMedicalCenter" component={OneMedicalCenter} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterProfile" component={MedicalCenterProfile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
-        <Stack.Screen name="BloodDonationDashboard" component={BloodDonationDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="BloodDonationDashboard" component={BloodDonationDashboard}     options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

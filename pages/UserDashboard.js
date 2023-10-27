@@ -64,7 +64,7 @@ const UserDashboard = ({navigation}) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('RequestBlood')}>
+        onPress={() => navigation.navigate('BloodDonationDashboard')}>
         <Image
           style={styles.image}
           source={require('../assets/images/icons/icon(3).png')}

@@ -66,6 +66,10 @@ const Profile = ({navigation}) => {
           <Text style={styles.infoLabel}>Mobile:</Text>
           <Text style={styles.infoValue}>{userData.Mobile}</Text>
         </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoLabel}>User Type:</Text>
+          <Text style={styles.infoValue}>{userData.Type}</Text>
+        </View>
         {userType === 'donor' && (
           <View>
         <View style={styles.infoContainer}>

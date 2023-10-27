@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {SearchBar, Card, Button as RNEButton} from '@rneui/themed';
-import {ref, getDatabase, onValue, push, set, remove} from 'firebase/database';
+import {
+  ref,
+  getDatabase,
+  onValue,
+  push,
+  set,
+  remove,
+  get,
+} from 'firebase/database';
 import {app} from '../Firebase/FirebaseConfing.js';
 import {getUserSession} from '../SessionManager/SessionManager';
 import {
@@ -22,6 +30,7 @@ const BloodRequestPage = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [bloodRequests, setBloodRequests] = useState([]);
   const [userSession, setUserSession] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
 
   const updateSearch = text => {
     setSearch(text);
@@ -34,11 +43,29 @@ const BloodRequestPage = ({navigation}) => {
     const userSession = await getUserSession();
     setUserSession(userSession);
     const bloodRequestsRef = ref(database, 'bloodRequests');
-    onValue(bloodRequestsRef, snapshot => {
+    onValue(bloodRequestsRef, async snapshot => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         const requestsArray = Object.values(data);
         setBloodRequests(requestsArray);
+
+        // Fetch donor details for each accepted request
+        const promises = requestsArray.map(async request => {
+          const userId = request.userid;
+          const userProfileRef = ref(database, `Users/${userId}`);
+          const snapshot = await get(userProfileRef);
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            // Store donor details in an object with the donor's ID as the key
+            setUserDetails(prevDetails => ({
+              ...prevDetails,
+              [userId]: userData,
+            }));
+          }
+        });
+
+        // Wait for all promises to complete
+        await Promise.all(promises);
       } else {
         setBloodRequests([]);
       }
@@ -108,6 +135,21 @@ const BloodRequestPage = ({navigation}) => {
       });
   };
 
+  // Filter bloodRequests based on the search input
+  const filteredBloodRequests = bloodRequests.filter(request => {
+    // You can include multiple properties in the filter condition
+    const locationMatch = request.location
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const bloodTypeMatch = request.bloodType
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    // Add more properties here if needed
+
+    // Return true if any property contains the search input
+    return locationMatch || bloodTypeMatch; // Add more conditions as needed
+  });
+
   return (
     <ScrollView style={styles.view}>
       <Text style={styles.topic}>Blood Request Feed</Text>
@@ -122,7 +164,7 @@ const BloodRequestPage = ({navigation}) => {
         />
       </View>
 
-      {Object.values(bloodRequests).map((request, index) => {
+      {filteredBloodRequests.map((request, index) => {
         // Now you can access the data correctly
         console.log('Request:', request); // Log the request object
         console.log('Location:', request?.location); // Log location
@@ -138,10 +180,17 @@ const BloodRequestPage = ({navigation}) => {
                   uri: 'https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp',
                 }}
               />
+
               <View style={styles.textContainer}>
-                <Text style={styles.text}>Jhon Snow</Text>
-                <Text style={styles.text2}>{request.location}</Text>
-                <Text style={styles.text2}>{request.description}</Text>
+                {userDetails[request.userid] && (
+                  <View>
+                    <Text style={styles.text}>
+                      {userDetails[request.userid].Name}
+                    </Text>
+                    <Text style={styles.text2}>{request.location}</Text>
+                    <Text style={styles.text2}>{request.description}</Text>
+                  </View>
+                )}
               </View>
               <View style={styles.textContainer2}>
                 <Card.Image
@@ -151,18 +200,20 @@ const BloodRequestPage = ({navigation}) => {
                 <Text style={styles.text3}>{request.bloodType}</Text>
               </View>
             </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.declinebutton}
-                onPress={() => declineRequest(request)}>
-                <Text style={styles.declinebuttonText}>Decline</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.acceptbutton}
-                onPress={() => acceptRequest(request)}>
-                <Text style={styles.declinebuttonText}>Accept</Text>
-              </TouchableOpacity>
-            </View>
+            {userSession && userSession.Type === 'donor' && (
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.declinebutton}
+                  onPress={() => declineRequest(request)}>
+                  <Text style={styles.declinebuttonText}>Decline</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.acceptbutton}
+                  onPress={() => acceptRequest(request)}>
+                  <Text style={styles.declinebuttonText}>Accept</Text>
+                </TouchableOpacity>
+              </View>
+            )}
             {/* Add Edit and Delete buttons */}
             {userSession && userSession.uid === request.userid && (
               <View style={styles.buttonContainer}>
