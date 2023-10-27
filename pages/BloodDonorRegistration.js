@@ -6,12 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, ref, set} from 'firebase/database';
 import {saveUserSession} from '../SessionManager/SessionManager';
 import {Picker} from '@react-native-picker/picker';
-
+import {launchImageLibrary} from 'react-native-image-picker';
+import {storage, storageRef} from '../Firebase/FirebaseConfing';
+import {uploadBytesResumable, getDownloadURL} from 'firebase/storage';
 
 // import DatePicker from 'react-native-datepicker'; // Import the date picker component
 //import DatePicker from '@react-native-datetimepicker/datetimepicker'; // Import the date picker component
@@ -30,6 +33,9 @@ const BloodDonorRegistration = ({navigation}) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
+  const [image, setImages] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const [message, setMessage] = useState('');
 
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
@@ -59,6 +65,7 @@ const BloodDonorRegistration = ({navigation}) => {
           LastDonatedDate: lastDonatedDate, // Save the last donated date
           Latitude: latitude,
           Longitude: longitude,
+          Image: imageUrl, // Save the image
           Type: 'donor',
           CreatedAt: new Date(),
           UpdatedAt: new Date(),
@@ -91,7 +98,62 @@ const BloodDonorRegistration = ({navigation}) => {
       });
   }
 
-  
+  const imagePicker = async () => {
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      quality: 1,
+    })
+      .then(res => {
+        if (!res.didCancel) {
+          setImages(res.assets[0].uri);
+          handleUpload();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const handleUpload = async () => {
+    try {
+      const response = await fetch(image);
+
+      if (!response.ok) {
+        setMessage('Something went wrong');
+        throw new Error('Network request failed');
+      } else {
+        const blob = await response.blob();
+
+        const segments = image.split('/');
+
+        const fileName = segments[segments.length - 1];
+
+        const reference = storageRef(storage, 'images/' + fileName);
+
+        const uploadTask = uploadBytesResumable(reference, blob);
+
+        uploadTask.on(
+          'state_changed',
+          snapshot => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          },
+          error => {
+            console.error('Error during upload:', error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+              setImageUrl(downloadURL);
+              setMessage('Upload completed');
+            });
+          },
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <ScrollView>
       <Text style={styles.medifind}>MediFind</Text>
@@ -187,6 +249,17 @@ const BloodDonorRegistration = ({navigation}) => {
         value={longitude.toString()} // Convert the number back to a string for input
         onChangeText={text => setLongitude(parseFloat(text))} // Parse the input as a float
       />
+
+      <Text style={styles.headerTwo}>Profile Picture</Text>
+
+      <TouchableOpacity onPress={imagePicker}>
+        <Image
+          source={require('../assets/images/icons/bloodIcon.png')}
+          style={{height: 25, width: 25}}
+        />
+        {message ? <Text>{message}</Text> : <Text>Select From Gallery</Text>}
+        {/* <Text>Select From Gallery</Text> */}
+      </TouchableOpacity>
 
       <MyButton title="Register" onPress={register}></MyButton>
 
