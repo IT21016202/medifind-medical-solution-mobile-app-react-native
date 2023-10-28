@@ -32,7 +32,7 @@ const ContactHistoryPage = () => {
           // Set all users in the state
           setAllUsers(users);
           // Filter recent doctors and pharmacies
-          const recentDoctorUsers = users.filter((user) => user.Type === 'medical');
+          const recentDoctorUsers = users.filter((user) => user.Type === 'doctor');
           setRecentDoctors(recentDoctorUsers.slice(0, 3));
           const recentPharmacyUsers = users.filter((user) => user.Type === 'donor');
           setRecentPharmacies(recentPharmacyUsers.slice(0, 3));

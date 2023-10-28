@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ImageBackground } from 'react-native'; // Import ImageBackground
-
+import { getUserSession, clearUserSession } from '../SessionManager/SessionManager';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,10 @@ import { useNavigation } from '@react-navigation/native';
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
+  function logout() {
+    clearUserSession();
+    navigation.navigate('Home');
+}
 
   useEffect(() => {
     const auth = getAuth();
@@ -82,7 +86,7 @@ const ProfilePage = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Logout</Text>
+            <Text style={styles.buttonText} onPress={logout}>Logout</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -7,7 +7,11 @@ class PharmacyScreen extends Component {
     super(props);
 
     this.state = {
-      selectedPharmacy: null,
+      selectedPharmacies: {
+        recommended: null,
+        recentlyContacted: null,
+        viewAll: null,
+      },
       showModal: false,
       pharmacies: [], // Store the fetched pharmacy data
     };
@@ -26,7 +30,7 @@ class PharmacyScreen extends Component {
             const user = childSnapshot.val();
             if (user.Type === 'medical') {
               // Use a default image URL if the user doesn't have one
-              user.logo = 'https://randomuser.me/api/portraits/men/75.jpg';
+              user.logo = 'https://cdn-icons-png.flaticon.com/512/169/169837.png';
               pharmacyList.push(user);
             }
           });
@@ -40,16 +44,18 @@ class PharmacyScreen extends Component {
       });
   }
 
-  togglePharmacySelection = (pharmacy) => {
-    if (this.state.selectedPharmacy === pharmacy) {
-      this.setState({ selectedPharmacy: null });
-    } else {
-      this.setState({ selectedPharmacy: pharmacy });
-    }
+  togglePharmacySelection = (container, pharmacy) => {
+    const selectedPharmacies = { ...this.state.selectedPharmacies };
+    selectedPharmacies[container] = pharmacy;
+    this.setState({ selectedPharmacies });
   };
 
   sendPrescription = () => {
-    if (this.state.selectedPharmacy) {
+    const selectedPharmacy = Object.values(this.state.selectedPharmacies).find(
+      (pharmacy) => pharmacy !== null
+    );
+
+    if (selectedPharmacy) {
       this.setState({ showModal: true });
     }
   };
@@ -58,7 +64,7 @@ class PharmacyScreen extends Component {
     this.setState({ showModal: false });
   };
 
-  renderPharmacyContainer(title, pharmacyList) {
+  renderPharmacyContainer(title, container, pharmacyList) {
     return (
       <View style={styles.container}>
         <Text style={styles.containerTitle}>{title}</Text>
@@ -68,9 +74,9 @@ class PharmacyScreen extends Component {
               key={pharmacy.id}
               style={[
                 styles.pharmacyItem,
-                this.state.selectedPharmacy === pharmacy && styles.selectedPharmacyItem,
+                this.state.selectedPharmacies[container] === pharmacy && styles.selectedPharmacyItem,
               ]}
-              onPress={() => this.togglePharmacySelection(pharmacy)}
+              onPress={() => this.togglePharmacySelection(container, pharmacy)}
             >
               <View style={styles.pharmacyItemContainer}>
                 <Image source={{ uri: pharmacy.logo }} style={styles.pharmacyLogo} />
@@ -87,11 +93,11 @@ class PharmacyScreen extends Component {
     return (
       <View style={styles.screen}>
         <View style={styles.containerGroup}>
-          {this.renderPharmacyContainer('Recommended', this.state.pharmacies)}
-          {this.renderPharmacyContainer('Recently Contacted', this.state.pharmacies)}
-          {this.renderPharmacyContainer('View All', this.state.pharmacies)}
+          {this.renderPharmacyContainer('Recommended', 'recommended', this.state.pharmacies)}
+          {this.renderPharmacyContainer('Recently Contacted', 'recentlyContacted', this.state.pharmacies)}
+          {this.renderPharmacyContainer('View All', 'viewAll', this.state.pharmacies)}
         </View>
-        {this.state.selectedPharmacy && (
+        {Object.values(this.state.selectedPharmacies).some((pharmacy) => pharmacy !== null) && (
           <TouchableOpacity style={styles.sendButton} onPress={this.sendPrescription}>
             <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
@@ -104,9 +110,9 @@ class PharmacyScreen extends Component {
         >
           <View style={styles.modalBackground}>
             <View style={styles.modalContent}>
-              {this.state.selectedPharmacy ? (
+              {Object.values(this.state.selectedPharmacies).some((pharmacy) => pharmacy !== null) ? (
                 <Text style={styles.modalText}>
-                  Prescription sent to {this.state.selectedPharmacy.name} successfully!
+                  Prescription sent successfully to selected pharmacies!
                 </Text>
               ) : (
                 <Text style={styles.modalText}>No pharmacy selected.</Text>
@@ -145,9 +151,11 @@ const styles = StyleSheet.create({
   pharmacyItem: {
     marginRight: 10,
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'transparent',
+    borderRadius: 10,
   },
   selectedPharmacyItem: {
-    borderWidth: 2,
     borderColor: 'green',
   },
   pharmacyLogo: {

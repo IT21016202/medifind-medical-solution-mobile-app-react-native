@@ -20,6 +20,8 @@ import PharmacyScreen from "./pages/PharmacyScreen";
 import UserDashboardHeaderIcons from "./pages/UserDashboardHeaderIcons";
 import ChatListPage from "./pages/ChatListPage";
 import Appointments from "./pages/Appointments";
+import NewAppointment from "./pages/NewAppointment";
+import NotificationScreen from "./pages/NotificationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -138,6 +140,22 @@ const App = () =>{
             ),
           })}/>
           <Stack.Screen name="Appointments" component={Appointments} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+          <Stack.Screen name="NewAppointment" component={NewAppointment} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+          <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={({ navigation }) => ({
             headerStyle: { backgroundColor: '#13BC9E' },
             headerTintColor: '#fff',
             headerTitle: '',

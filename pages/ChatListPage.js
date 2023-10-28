@@ -5,32 +5,12 @@ const ChatListPage = ({ navigation }) => {
   const chatData = [
     {
       id: '1',
-      name: 'John Doe',
+      name: 'Kamal Elapatha',
       message: 'Hello, how are you?',
       time: '11:10 AM',
       avatar: require('../assets/images/profilebackground.jpg'),
     },
-    {
-      id: '2',
-      name: 'Alice Smith',
-      message: 'Sure, I can do that.',
-      time: '10:30 AM',
-      avatar: require('../assets/images/profilebackground.jpg'),
-    },
-    {
-        id: '3',
-        name: 'John Doe',
-        message: 'Hello, how are you?',
-        time: 'Yesterday',
-        avatar: require('../assets/images/profilebackground.jpg'),
-      },
-      {
-        id: '4',
-        name: 'Alice Smith',
-        message: 'Sure, I can do that.',
-        time: 'Yesterday',
-        avatar: require('../assets/images/profilebackground.jpg'),
-      },
+
     // Add more chat items as needed
   ];
 
