@@ -164,10 +164,10 @@ const RequestBlood = ({navigation}) => {
 
       <View style={styles.buttonContainer}>
         <SubmitButton text="Submit" onPress={handleDataSubmission} />
-        <SubmitButton
+        {/* <SubmitButton
           text="All other UI's"
           onPress={() => navigation.navigate('TemporaryPage')}
-        />
+        /> */}
       </View>
     </ScrollView>
   );
@@ -216,9 +216,9 @@ const styles = StyleSheet.create({
   // },
 
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10, // Add margin as needed
+    flex: 1,
+    justifyContent: 'center', // Center vertically
+    alignItems: 'center',
   },
 });
 
