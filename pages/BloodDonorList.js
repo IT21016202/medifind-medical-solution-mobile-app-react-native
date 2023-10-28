@@ -58,19 +58,18 @@ const BloodDonorList = ({navigation}) => {
     navigation.navigate('DonorMapView');
   };
 
-  const filteredDonorList = donorList.filter((donor) => {
+  const filteredDonorList = donorList.filter(donor => {
     const searchQuery = search.toLowerCase();
     const donorName = donor.Name ? donor.Name.toLowerCase() : '';
     const bloodType = donor.BloodType ? donor.BloodType.toLowerCase() : '';
     const location = donor.Location ? donor.Location.toLowerCase() : '';
-  
+
     return (
       donorName.includes(searchQuery) ||
       bloodType.includes(searchQuery) ||
       location.includes(searchQuery)
     );
   });
-  
 
   return (
     <ScrollView style={styles.view}>
@@ -95,7 +94,7 @@ const BloodDonorList = ({navigation}) => {
             <Card.Image
               style={{borderRadius: 100, width: 80, height: 80}}
               source={{
-                uri: 'https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp',
+                uri: donor.Image,
               }}
             />
             <View style={styles.textContainer}>

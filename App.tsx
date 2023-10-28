@@ -37,7 +37,8 @@ import UserAddedRequests from "./pages/UserAddedRequests";
 import Scheduele from "./pages/Scheduele";
 import SplashScreen from "./pages/SplashScreen";
 import NearByCentersMapView from "./pages/NearByCentersMapView";
-import LocationPicker from "./pages/LocationPicker";import ProfilePage from "./pages/ProfilePage";
+import LocationPicker from "./pages/LocationPicker";
+import ProfilePage from "./pages/ProfilePage";
 import ContactHistoryPage from "./pages/ContactHistory";
 import DoctorHistoryPage from "./pages/DoctorHistory";
 import PrescriptionDetails from "./pages/PrescriptionDetails";
@@ -46,6 +47,7 @@ import PharmacyScreen from "./pages/PharmacyScreen";
 import UserDashboardHeaderIcons from "./pages/UserDashboardHeaderIcons";
 import ChatListPage from "./pages/ChatListPage";
 import Appointments from "./pages/Appointments";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +88,71 @@ const App = () =>{
         <Stack.Screen name="Scheduele" component={Scheduele} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="NearByCentersMapView" component={NearByCentersMapView} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="LocationPicker" component={LocationPicker} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="ProfilePage" component={ProfilePage} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+        <Stack.Screen name="ContactHistoryPage" component={ContactHistoryPage} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+        <Stack.Screen name="DoctorHistoryPage" component={DoctorHistoryPage} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+        <Stack.Screen name="PrescriptionDetails" component={PrescriptionDetails} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+        <Stack.Screen name="ChatScreen" component={ChatScreen} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+           <Stack.Screen name="PharmacyScreen" component={PharmacyScreen} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+        <Stack.Screen name="ChatListPage" component={ChatListPage} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+          <Stack.Screen name="Appointments" component={Appointments} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <UserDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

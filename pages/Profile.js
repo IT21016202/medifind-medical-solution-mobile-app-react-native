@@ -53,7 +53,7 @@ const Profile = ({navigation}) => {
       <View style={styles.avatarContainer}>
         <Image
           source={{
-            uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
+            uri: userData.Image,
           }}
           style={styles.avatar}
         />
@@ -119,9 +119,9 @@ const Profile = ({navigation}) => {
             <Text>View Accepted Requests</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonContainer}>
+          {/* <TouchableOpacity style={styles.buttonContainer}>
             <Text>Donor-specific Button 3</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
     </View>

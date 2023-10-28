@@ -202,11 +202,11 @@ const BloodRequestPage = ({navigation}) => {
             </View>
             {userSession && userSession.Type === 'donor' && (
               <View style={styles.buttonContainer}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.declinebutton}
                   onPress={() => declineRequest(request)}>
                   <Text style={styles.declinebuttonText}>Decline</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={styles.acceptbutton}
                   onPress={() => acceptRequest(request)}>
@@ -245,6 +245,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#13BC9E',
     marginBottom: 10,
+    textAlign: 'center', // Center text horizontally
+    textAlignVertical: 'center',
   },
   text: {
     fontSize: 20,
