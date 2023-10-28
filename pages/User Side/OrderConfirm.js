@@ -7,12 +7,14 @@ import {
   TextInput,
   Touchable,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 const OrderConfirm = ({route, navigation}) => {
   const {quantity, price} = route.params;
 
   const [userName, setUserName] = useState('');
+  const [address, setAddress] = useState('');
 
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -23,6 +25,11 @@ const OrderConfirm = ({route, navigation}) => {
 
   const handleOptionPress = value => {
     setSelectedOption(value);
+  };
+
+  const submitOrder = () => {
+    Alert.alert('Order has been submitted');
+    navigation.navigate('MediRequest');
   };
 
   return (
@@ -63,8 +70,8 @@ const OrderConfirm = ({route, navigation}) => {
         <Text style={styles.texts}>Your Address</Text>
         <TextInput
           style={styles.txtInput}
-          value={userName}
-          onChangeText={text => setUserName(text)}></TextInput>
+          value={address}
+          onChangeText={text => setAddress(text)}></TextInput>
       </View>
 
       <View>
@@ -123,6 +130,7 @@ const OrderConfirm = ({route, navigation}) => {
         )}
 
         <TouchableOpacity
+          onPress={submitOrder}
           style={{
             backgroundColor: '#046352',
             margin: 40,

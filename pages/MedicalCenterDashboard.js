@@ -1,8 +1,14 @@
-import React from 'react'
-import { Text, Image, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native";
+import React from 'react';
+import {
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Button,
+} from 'react-native';
 
-const MedicalCenterDashboard = ({navigation}) => {
-
+const MedicalCenterDashboard = ({route, navigation}) => {
   const mediReq = () => {
     navigation.navigate('MedicalMediReq');
   };
@@ -11,38 +17,32 @@ const MedicalCenterDashboard = ({navigation}) => {
     <ScrollView style={styles.view}>
       <Text style={styles.topic}>What Do You Need ?</Text>
 
-      <TouchableOpacity style={styles.button} onPress={mediReq}>
+      <TouchableOpacity  onPress={mediReq}>
         <Image
-          style={styles.image}
-          source={require('../assets/images/icons/icon(1).png')}
+        style={styles.image}
+          source={require('../assets/images/MedicineRequest1.png')}
         />
-        <Text style={styles.text}>Medicine Requests</Text>
+
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
-        <Image
-          style={styles.image}
-          source={require('../assets/images/icons/icon(3).png')}
-        />
-        <Text style={styles.text}>Orders</Text>
+      <TouchableOpacity >
+        <Image style={styles.image} source={require('../assets/images/Orders1.png')} />
       </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
-                <Image style={styles.image} source={require('../assets/images/icons/icon(6).png')}/>
-                <Text style={styles.text}>Appoinments</Text>
-            </TouchableOpacity> 
+      <TouchableOpacity >
+        <Image style={styles.image} source={require('../assets/images/Appoinments1.png')} />
+      </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Scheduele')}>
-                <Image style={styles.image} source={require('../assets/images/icons/icon(7).png')}/>
-                <Text style={styles.text}>Schedules</Text>
-            </TouchableOpacity> 
+      <TouchableOpacity  onPress={() => navigation.navigate('Scheduele')}>
+        <Image style={styles.image} source={require('../assets/images/Schedueles1.png')} />
+      </TouchableOpacity>
 
-            <Button title='Profile' onPress={() => navigation.navigate('MedicalCenterProfile')}></Button>
-
-        </ScrollView>
-    )
-}
-
+      {/* <Button
+        title="Profile"
+        onPress={() => navigation.navigate('MedicalCenterProfile')}></Button> */}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   view: {
@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
 
   image: {
     marginLeft: 15,
+    width: 330,
+    height: 140,
+    marginBottom: 25,
   },
 
   text: {

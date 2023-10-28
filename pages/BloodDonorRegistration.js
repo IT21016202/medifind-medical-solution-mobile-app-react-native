@@ -21,7 +21,7 @@ import {uploadBytesResumable, getDownloadURL} from 'firebase/storage';
 
 import MyButton from '../components/MyButton';
 
-const BloodDonorRegistration = ({navigation}) => {
+const BloodDonorRegistration = ({route, navigation}) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -57,6 +57,7 @@ const BloodDonorRegistration = ({navigation}) => {
     // Create a new user to authentication
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
+        const {longitude, latitude} = route.params;
         const userData = {
           Name: name,
           Mobile: mobileNo,
@@ -159,6 +160,13 @@ const BloodDonorRegistration = ({navigation}) => {
       <Text style={styles.medifind}>MediFind</Text>
       <Text style={styles.registraion}>Donor Registration</Text>
 
+      <Text style={styles.text}>Your Location</Text>
+      <TouchableOpacity
+        style={styles.input}
+        onPress={() => navigation.navigate('DonorLocationPicker')}>
+        <Text>Touch here to pick location</Text>
+      </TouchableOpacity>
+
       <TextInput
         style={{paddingLeft: '8%', color: 'black'}}
         placeholder="Enter Email"
@@ -232,7 +240,7 @@ const BloodDonorRegistration = ({navigation}) => {
         value={lastDonatedDate}
         onChangeText={text => setLastDonatedDate(text)}></TextInput>
 
-      <TextInput
+      {/* <TextInput
         style={{paddingLeft: '8%', color: 'black'}}
         placeholder="Enter Latitude"
         placeholderTextColor="gray"
@@ -248,7 +256,7 @@ const BloodDonorRegistration = ({navigation}) => {
         name="longitude"
         value={longitude.toString()} // Convert the number back to a string for input
         onChangeText={text => setLongitude(parseFloat(text))} // Parse the input as a float
-      />
+      /> */}
 
       <Text style={styles.headerTwo}>Profile Picture</Text>
 

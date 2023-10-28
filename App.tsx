@@ -15,6 +15,7 @@ import MedicalCenterDashboard from "./pages/MedicalCenterDashboard";
 import MedicalCenterProfile from "./pages/MedicalCenterProfile";
 import Notification from "./pages/Notification";
 import AdminDashboard from "./pages/AdminDashboard";
+import MedicalDashboardHeaderIcons from "./pages/MedicalDashboardHeaderIcons";
 
 //Blood Pages
 import RequestBlood from "./pages/RequestBlood";
@@ -27,6 +28,7 @@ import AcceptedRequestsPage from "./pages/AcceptedRequestsPage";
 import EditRequest from "./pages/EditRequestScreen";
 import DonorMapView from "./pages/DonorMapView";
 import DonorAcceptedRequests from "./pages/DonorAcceptedRequests";
+import DonorLocationPicker from "./pages/DonorLocationPicker";
 import Chart from "./pages/Chart";
 import NearByMedicalCenters from "./pages/NearByMedicalCenters";
 import AllMedicalCenters from "./pages/AllMedicalCenters";
@@ -48,6 +50,15 @@ import UserDashboardHeaderIcons from "./pages/UserDashboardHeaderIcons";
 import ChatListPage from "./pages/ChatListPage";
 import Appointments from "./pages/Appointments";
 
+import MedicineReq from './pages/User Side/MedicineReq';
+import AddMedicineReq from './pages/User Side/AddMedicineReq';
+import MedicineRequest from './pages/MedicalCenter/MedicineRequest';
+import OneMedicineReq from './pages/MedicalCenter/OneMedicineReq';
+import AddLocation from './pages/User Side/AddLocation';
+import BuyMedicine from './pages/User Side/BuyMedicine';
+import OrderConfirm from './pages/User Side/OrderConfirm';
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -64,7 +75,14 @@ const App = () =>{
         <Stack.Screen name="RegisterSelection" component={RegistrationSelection} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="MedicalCenterRegistration" component={MedicalCenterRegisterPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="UserRegistration" component={UserRegisterPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
-        <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="MedicalCenterDashboard" component={MedicalCenterDashboard} options={({ navigation }) => ({
+            headerStyle: { backgroundColor: '#13BC9E' },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => (
+              <MedicalDashboardHeaderIcons navigation={navigation} />
+            ),
+          })}/>
         <Stack.Screen name="Notification" component={Notification} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AdminDashboard" component={AdminDashboard} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="RequestBlood" component={RequestBlood} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
@@ -75,6 +93,7 @@ const App = () =>{
         <Stack.Screen name="BloodDonorRegistration" component={BloodDonorRegistration} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="BloodDonorList" component={BloodDonorList} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="AcceptedRequestsPage" component={AcceptedRequestsPage} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
+        <Stack.Screen name="DonorLocationPicker" component={DonorLocationPicker} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="Profile" component={Profile} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="EditRequest" component={EditRequest} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
         <Stack.Screen name="DonorMapView" component={DonorMapView} options={{headerStyle:{backgroundColor: '#13BC9E'}, headerTintColor: '#fff', headerTitle: ''}}/>
@@ -152,6 +171,78 @@ const App = () =>{
               <UserDashboardHeaderIcons navigation={navigation} />
             ),
           })}/>
+
+<Stack.Screen
+          name="MediRequest"
+          component={MedicineReq}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+            headerTitle: 'Medicine Request',
+          }}
+        />
+        <Stack.Screen
+          name="AddMediRequest"
+          component={AddMedicineReq}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+
+            headerTitle: 'Request Medicine Post',
+          }}
+        />
+
+        <Stack.Screen
+          name="MedicalMediReq"
+          component={MedicineRequest}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+
+            headerTitle: 'Medicine Requests',
+          }}
+        />
+
+        <Stack.Screen
+          name="AddLocation"
+          component={AddLocation}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+
+            headerTitle: 'Request Medicine Post',
+          }}
+        />
+
+        <Stack.Screen
+          name="OneMedicineRequest"
+          component={OneMedicineReq}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+
+            headerTitle: 'Medicine Request',
+          }}
+        />
+        <Stack.Screen
+          name="BuyMedicine"
+          component={BuyMedicine}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+            headerTitle: 'Buy Medicine',
+          }}
+        />
+
+        <Stack.Screen
+          name="OrderConfirmation"
+          component={OrderConfirm}
+          options={{
+            headerStyle: {backgroundColor: '#046352'},
+            headerTintColor: '#fff',
+            headerTitle: 'Order Confirmation',
+          }}
+        />
 
       </Stack.Navigator>
     </NavigationContainer>

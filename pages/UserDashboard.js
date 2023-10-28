@@ -58,7 +58,7 @@ const UserDashboard = ({navigation}) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('MediRequest')}>
         <Image
           style={styles.image}
           source={require('../assets/images/FindMedicine.png')}
@@ -109,16 +109,6 @@ const styles = StyleSheet.create({
     color: '#13BC9E',
   },
 
-  button: {
-    borderWidth: 1,
-    borderColor: '#13BC9E',
-    borderRadius: 20,
-    padding: 10,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 20,
-  },
-});
   button: {
     borderWidth: 1,
     borderColor: '#13BC9E',
