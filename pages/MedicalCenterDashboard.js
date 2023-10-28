@@ -3,19 +3,29 @@ import { Text, Image, StyleSheet, TouchableOpacity, ScrollView, Button } from "r
 
 const MedicalCenterDashboard = ({navigation}) => {
 
-    return(
-        <ScrollView style={styles.view}>
-            <Text style={styles.topic}>What Do You Need ?</Text>
-            
-            <TouchableOpacity style={styles.button}>
-                <Image style={styles.image} source={require('../assets/images/icons/icon(3).png')}/>
-                <Text style={styles.text}>Medicine Requests</Text>
-            </TouchableOpacity>
+  const mediReq = () => {
+    navigation.navigate('MedicalMediReq');
+  };
 
-            <TouchableOpacity style={styles.button}>
-                <Image style={styles.image} source={require('../assets/images/icons/icon(1).png')}/>
-                <Text style={styles.text}>Orders</Text>
-            </TouchableOpacity> 
+  return (
+    <ScrollView style={styles.view}>
+      <Text style={styles.topic}>What Do You Need ?</Text>
+
+      <TouchableOpacity style={styles.button} onPress={mediReq}>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/icons/icon(1).png')}
+        />
+        <Text style={styles.text}>Medicine Requests</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button}>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/icons/icon(3).png')}
+        />
+        <Text style={styles.text}>Orders</Text>
+      </TouchableOpacity>
 
             <TouchableOpacity style={styles.button}>
                 <Image style={styles.image} source={require('../assets/images/icons/icon(6).png')}/>
@@ -35,37 +45,38 @@ const MedicalCenterDashboard = ({navigation}) => {
 
 
 const styles = StyleSheet.create({
-    view:{
-        padding: 20,
-    },
+  view: {
+    padding: 20,
+    backgroundColor: 'white',
+  },
 
-    topic:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#13BC9E',
-        marginBottom: 20,
-    },
+  topic: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#13BC9E',
+    marginBottom: 20,
+  },
 
-    image:{
-       marginLeft: 15,
-    },
+  image: {
+    marginLeft: 15,
+  },
 
-    text:{
-        padding: 30,
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
+  text: {
+    padding: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#13BC9E',
+  },
 
-    button:{
-        borderWidth: 1,
-        borderColor: '#13BC9E',
-        borderRadius: 20,
-        padding: 10,
-        flexDirection:'row',
-        flexWrap:'wrap',
-        marginBottom: 20,
-    }
-})
-
+  button: {
+    borderWidth: 1,
+    borderColor: '#13BC9E',
+    borderRadius: 20,
+    padding: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 20,
+  },
+});
 
 export default MedicalCenterDashboard;

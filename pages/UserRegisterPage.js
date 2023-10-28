@@ -188,25 +188,25 @@ const UserRegisterPage = ({navigation}) =>{
 }
 
 const styles = StyleSheet.create({
-    medifind:{
-        color: 'white', 
-        fontSize: 25, 
-        fontWeight: 'bold',
-        backgroundColor: '#13BC9E',
-        paddingLeft: '8%',
-        paddingTop: '5%'
-    },
+  medifind: {
+    color: 'white',
+    fontSize: 25,
+    fontWeight: 'bold',
+    backgroundColor: '#13BC9E',
+    paddingLeft: '8%',
+    paddingTop: '5%',
+  },
 
-    registraion:{
-        color: 'white',
-        fontSize: 20,
-        backgroundColor: '#13BC9E',
-        paddingLeft: '8%',
-        paddingBottom: '5%',
-        borderBottomLeftRadius: 25,
-        borderBottomRightRadius: 25,
-        marginBottom: 10
-    },
+  registraion: {
+    color: 'white',
+    fontSize: 20,
+    backgroundColor: '#13BC9E',
+    paddingLeft: '8%',
+    paddingBottom: '5%',
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    marginBottom: 10,
+  },
 
     registered:{
         fontSize: 16,
