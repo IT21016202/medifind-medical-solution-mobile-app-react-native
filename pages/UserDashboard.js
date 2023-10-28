@@ -28,6 +28,9 @@ const UserDashboard = ({navigation}) => {
     clearUserSession();
     navigation.navigate('Home');
   }
+    function navigateToProfile() {
+        navigation.navigate('ProfilePage'); // Navigate to the ProfilePage
+    }
 
   return (
     <ScrollView style={styles.view}>

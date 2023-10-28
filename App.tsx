@@ -37,7 +37,15 @@ import UserAddedRequests from "./pages/UserAddedRequests";
 import Scheduele from "./pages/Scheduele";
 import SplashScreen from "./pages/SplashScreen";
 import NearByCentersMapView from "./pages/NearByCentersMapView";
-import LocationPicker from "./pages/LocationPicker";
+import LocationPicker from "./pages/LocationPicker";import ProfilePage from "./pages/ProfilePage";
+import ContactHistoryPage from "./pages/ContactHistory";
+import DoctorHistoryPage from "./pages/DoctorHistory";
+import PrescriptionDetails from "./pages/PrescriptionDetails";
+import ChatScreen from "./pages/Chat";
+import PharmacyScreen from "./pages/PharmacyScreen";
+import UserDashboardHeaderIcons from "./pages/UserDashboardHeaderIcons";
+import ChatListPage from "./pages/ChatListPage";
+import Appointments from "./pages/Appointments";
 
 const Stack = createNativeStackNavigator();
 
