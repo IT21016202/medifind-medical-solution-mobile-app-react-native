@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, ScrollView, TouchableOpacity, Alert, TextInput, ImageBackground} from "react-native";
 import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import { saveUserSession } from "../SessionManager/SessionManager";
 import { getDatabase, ref, get } from 'firebase/database';
@@ -16,10 +16,24 @@ const LoginPage = ({ navigation }) =>{
         const auth = getAuth();
         const database = getDatabase();
         
+        // Validating null values
+        if (email == "" || password == ""){
+            Alert.alert("Invalid Input", "Please fill all the fields !");
+            return;
+        }
+
+        // Regular expression for a basic email validation
+        const emailPattern = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    
+        if (!email.match(emailPattern)) {
+            // If the email doesn't match the pattern, show an alert or handle the error
+            Alert.alert('Invalid Email', 'Please enter a valid email address.');
+            return;
+        }
 
         // Validating password
         if (password.length <= 5){
-            alert("Password should be at least 6 characters !");
+            Alert.alert("Invalid Password", "Password should be at least 6 characters long !");
             return;
         }
     
@@ -37,7 +51,7 @@ const LoginPage = ({ navigation }) =>{
                 if(snapshot.exists()){
                     // Data exists in the document
                     const data = snapshot.val();
-                    navigation.navigate('Home');
+                    navigation.navigate('SplashScreen');
                     // Save user session
                     saveUserSession({ uid: userCredential.user.uid, email: userCredential.user.email, ...data });
                 }
@@ -52,30 +66,41 @@ const LoginPage = ({ navigation }) =>{
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.error('Sign-in error:', errorCode, errorMessage);
+            //console.error('Sign-in error:', errorCode, errorMessage);
+            Alert.alert("Invalid Credentials", "Please check your email and password !");
         });
     }
 
 
     return(
-        <ScrollView>
-            {/* <ToolBarWithoutIcon/> */}
-            <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
+        <ImageBackground
+            source={require('../assets/images/selection-back.jpg')}
+            style={styles.backgroundImage}
+        >
+            <ScrollView>
+                {/* <ToolBarWithoutIcon/> */}
+                <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
 
-            <Text style={styles.welcome}>Welcome to</Text>
-            <Text style={styles.medifind}>MediFind</Text>
+                <Text style={styles.welcome}>Hello there</Text>
+                <Text style={styles.medifind}>Welcome back</Text> 
 
-            <Text style={styles.loginText}>Please Login Your Account to Continue...</Text>
+                <Text style={styles.loginText}>Let's log you in...</Text>
 
-            <TextInputBox placeH="example@email.com" name="email" value={email} onChangeT={text => setEmail(text)}></TextInputBox>
-            <TextInputBox placeH="Password" name="password" value={password} onChangeT={text => setPassword(text)}></TextInputBox>
- 
-            <MyButton onPress={login} title="Login"/>
+                <TextInput style={styles.input} placeholder="Enter Email" name="email" value={email} onChangeText={text => setEmail(text)}></TextInput>
+                <TextInput style={styles.input} placeholder="Password" name="password" value={password} secureTextEntry={true} onChangeText={text => setPassword(text)}></TextInput>
 
-            <TouchableOpacity onPress={() => navigation.navigate('RegisterSelection')}>
-                <Text style={styles.dont}>Don't have and account ? Sign Up</Text>
-            </TouchableOpacity>
-        </ScrollView>
+                {/* <TextInputBox placeH="example@email.com" name="email" value={email} onChangeT={text => setEmail(text)}></TextInputBox>
+                <TextInputBox placeH="Password" name="password" value={password} onChangeT={text => setPassword(text)}></TextInputBox> */}
+    
+                <TouchableOpacity style={styles.btn} onPress={login}>
+                    <Text style={styles.btntext}>Login</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => navigation.navigate('RegisterSelection')}>
+                    <Text style={styles.dont}>New User ? Sign Up</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </ImageBackground>
     );
 }
 
@@ -83,8 +108,7 @@ const LoginPage = ({ navigation }) =>{
 const styles = StyleSheet.create({
     logo:{
         width: '100%',
-        height: 300,
-        marginTop: -30,  
+        height: 250,
     },
 
     welcome: {
@@ -92,16 +116,18 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 25,
         paddingLeft: '10%',
+        fontWeight: 'bold',
     },
 
     medifind:{
         backgroundColor: '#13BC9E',
         color: 'white',
-        fontSize: 32,
+        fontSize: 28,
         paddingLeft: '10%',
         paddingBottom: '5%',
         borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30
+        borderBottomRightRadius: 30,
+        fontWeight: 'bold',
     },
 
     loginText:{
@@ -115,13 +141,48 @@ const styles = StyleSheet.create({
         marginRight: '2%'
     },
 
+    input:{
+        fontSize: 16,
+        paddingLeft: '4%',
+        paddingTop: '3%',
+        paddingBottom: '3%',
+        marginLeft: '8%',
+        marginRight: '8%',
+        marginBottom: '4%',
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: '#13BC9E',
+    },
+
+    btn:{
+        backgroundColor: '#13BC9E',
+        borderRadius: 20,
+        padding: 8,
+        marginTop: '2%',
+        marginLeft: '8%',
+        marginRight: '8%',
+    },
+
+    btntext:{
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+
     dont:{
         fontSize: 16,
         marginTop: '10%',
         marginLeft: '8%',
         fontWeight: 'bold',
-        color: '#13BC9E'
-    } 
+        color: 'black'
+    },
+
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', 
+    },
 
 })
 

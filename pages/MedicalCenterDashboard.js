@@ -1,66 +1,85 @@
-import React from 'react'
-import { Text, Image, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native";
-import { clearUserSession } from '../SessionManager/SessionManager';
+import React from 'react';
+import {
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Button,
+} from 'react-native';
 
-const MedicalCenterDashboard = ({navigation}) => {
+const MedicalCenterDashboard = ({route, navigation}) => {
+  const mediReq = () => {
+    navigation.navigate('MedicalMediReq');
+  };
 
-    function logout() {
-        clearUserSession();
-        navigation.navigate('Home');
-    }
+  return (
+    <ScrollView style={styles.view}>
+      <Text style={styles.topic}>What Do You Need ?</Text>
 
-    return(
-        <ScrollView style={styles.view}>
-            <Text style={styles.topic}>What Do You Need ?</Text>
-            
-            <TouchableOpacity style={styles.button}>
-                <Image style={styles.image} source={require('../assets/images/icons/icon(3).png')}/>
-                <Text style={styles.text}>Medicine Requests</Text>
-            </TouchableOpacity>
+      <TouchableOpacity  onPress={mediReq}>
+        <Image
+        style={styles.image}
+          source={require('../assets/images/MedicineRequest1.png')}
+        />
 
-            <TouchableOpacity style={styles.button}>
-                <Image style={styles.image} source={require('../assets/images/icons/icon(1).png')}/>
-                <Text style={styles.text}>Orders</Text>
-            </TouchableOpacity> 
+      </TouchableOpacity>
 
-            <Button title='Log Out' onPress={logout}></Button>
-        </ScrollView>
-    )
-}
+      <TouchableOpacity >
+        <Image style={styles.image} source={require('../assets/images/Orders1.png')} />
+      </TouchableOpacity>
 
+      <TouchableOpacity >
+        <Image style={styles.image} source={require('../assets/images/Appoinments1.png')} />
+      </TouchableOpacity>
+
+      <TouchableOpacity  onPress={() => navigation.navigate('Scheduele')}>
+        <Image style={styles.image} source={require('../assets/images/Schedueles1.png')} />
+      </TouchableOpacity>
+
+      {/* <Button
+        title="Profile"
+        onPress={() => navigation.navigate('MedicalCenterProfile')}></Button> */}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    view:{
-        padding: 20,
-    },
+  view: {
+    padding: 20,
+    backgroundColor: 'white',
+  },
 
-    topic:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#13BC9E',
-        marginBottom: 20,
-    },
+  topic: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#13BC9E',
+    marginBottom: 20,
+  },
 
-    image:{
-       marginLeft: 15,
-    },
+  image: {
+    marginLeft: 15,
+    width: 330,
+    height: 140,
+    marginBottom: 25,
+  },
 
-    text:{
-        padding: 30,
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
+  text: {
+    padding: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#13BC9E',
+  },
 
-    button:{
-        borderWidth: 1,
-        borderColor: '#13BC9E',
-        borderRadius: 20,
-        padding: 10,
-        flexDirection:'row',
-        flexWrap:'wrap',
-        marginBottom: 20,
-    }
-})
-
+  button: {
+    borderWidth: 1,
+    borderColor: '#13BC9E',
+    borderRadius: 20,
+    padding: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 20,
+  },
+});
 
 export default MedicalCenterDashboard;
